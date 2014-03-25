@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D02FE6BE18E19CDA00AC7043 /* CCGestureRecognizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D02FE6B818E19CDA00AC7043 /* CCGestureRecognizer.cpp */; };
+		D02FE6BF18E19CDA00AC7043 /* CCSwipeGestureRecognizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D02FE6BA18E19CDA00AC7043 /* CCSwipeGestureRecognizer.cpp */; };
+		D02FE6C018E19CDA00AC7043 /* CCTapGestureRecognizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D02FE6BC18E19CDA00AC7043 /* CCTapGestureRecognizer.cpp */; };
 		D030A49518E1353B00EA772E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D030A49418E1353B00EA772E /* QuartzCore.framework */; };
 		D030A49718E1353B00EA772E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D030A49618E1353B00EA772E /* OpenGLES.framework */; };
 		D030A49918E1353B00EA772E /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D030A49818E1353B00EA772E /* OpenAL.framework */; };
@@ -295,11 +298,24 @@
 		D030A85C18E1353F00EA772E /* b2Rope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D030A85B18E1353F00EA772E /* b2Rope.cpp */; };
 		D030A86418E1353F00EA772E /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D030A86318E1353F00EA772E /* libwebsockets.a */; };
 		D030A86A18E1353F00EA772E /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D030A86918E1353F00EA772E /* AppDelegate.cpp */; };
-		D030A86D18E1353F00EA772E /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D030A86C18E1353F00EA772E /* HelloWorldScene.cpp */; };
+		D030A86D18E1353F00EA772E /* SBScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D030A86C18E1353F00EA772E /* SBScene.cpp */; };
 		D030A86F18E1353F00EA772E /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = D030A86E18E1353F00EA772E /* blocks.png */; };
+		D030AC6518E13C7000EA772E /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = D030AC6218E13C7000EA772E /* background.png */; };
+		D030AC6618E13C7000EA772E /* enemy.png in Resources */ = {isa = PBXBuildFile; fileRef = D030AC6318E13C7000EA772E /* enemy.png */; };
+		D030AC6718E13C7000EA772E /* hero.png in Resources */ = {isa = PBXBuildFile; fileRef = D030AC6418E13C7000EA772E /* hero.png */; };
+		D030AC6E18E13EBE00EA772E /* Hero.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D030AC6C18E13EBE00EA772E /* Hero.cpp */; };
+		D030AC7318E13F1C00EA772E /* HeroView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D030AC7018E13F1C00EA772E /* HeroView.cpp */; };
+		D030AC7718E1429200EA772E /* HeroController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D030AC7518E1429100EA772E /* HeroController.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D02FE6B318E16F3900AC7043 /* HeroControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HeroControllerDelegate.h; path = Classes/Controller/HeroControllerDelegate.h; sourceTree = "<group>"; };
+		D02FE6B818E19CDA00AC7043 /* CCGestureRecognizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCGestureRecognizer.cpp; path = Classes/Library/CCGestureRecognizer.cpp; sourceTree = "<group>"; };
+		D02FE6B918E19CDA00AC7043 /* CCGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCGestureRecognizer.h; path = Classes/Library/CCGestureRecognizer.h; sourceTree = "<group>"; };
+		D02FE6BA18E19CDA00AC7043 /* CCSwipeGestureRecognizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCSwipeGestureRecognizer.cpp; path = Classes/Library/CCSwipeGestureRecognizer.cpp; sourceTree = "<group>"; };
+		D02FE6BB18E19CDA00AC7043 /* CCSwipeGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCSwipeGestureRecognizer.h; path = Classes/Library/CCSwipeGestureRecognizer.h; sourceTree = "<group>"; };
+		D02FE6BC18E19CDA00AC7043 /* CCTapGestureRecognizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCTapGestureRecognizer.cpp; path = Classes/Library/CCTapGestureRecognizer.cpp; sourceTree = "<group>"; };
+		D02FE6BD18E19CDA00AC7043 /* CCTapGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTapGestureRecognizer.h; path = Classes/Library/CCTapGestureRecognizer.h; sourceTree = "<group>"; };
 		D030A49118E1353B00EA772E /* shitballoon_mvc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = shitballoon_mvc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D030A49418E1353B00EA772E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D030A49618E1353B00EA772E /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -920,9 +936,20 @@
 		D030A86618E1353F00EA772E /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
 		D030A86818E1353F00EA772E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Classes/AppDelegate.h; sourceTree = "<group>"; };
 		D030A86918E1353F00EA772E /* AppDelegate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = Classes/AppDelegate.cpp; sourceTree = "<group>"; };
-		D030A86B18E1353F00EA772E /* HelloWorldScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HelloWorldScene.h; path = Classes/HelloWorldScene.h; sourceTree = "<group>"; };
-		D030A86C18E1353F00EA772E /* HelloWorldScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = HelloWorldScene.cpp; path = Classes/HelloWorldScene.cpp; sourceTree = "<group>"; };
+		D030A86B18E1353F00EA772E /* SBScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SBScene.h; path = Classes/SBScene.h; sourceTree = "<group>"; };
+		D030A86C18E1353F00EA772E /* SBScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SBScene.cpp; path = Classes/SBScene.cpp; sourceTree = "<group>"; };
 		D030A86E18E1353F00EA772E /* blocks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blocks.png; path = Resources/blocks.png; sourceTree = "<group>"; };
+		D030AC6218E13C7000EA772E /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = background.png; path = Resources/background.png; sourceTree = "<group>"; };
+		D030AC6318E13C7000EA772E /* enemy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = enemy.png; path = Resources/enemy.png; sourceTree = "<group>"; };
+		D030AC6418E13C7000EA772E /* hero.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hero.png; path = Resources/hero.png; sourceTree = "<group>"; };
+		D030AC6A18E13DBC00EA772E /* CommonProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommonProtocols.h; path = Classes/CommonProtocols.h; sourceTree = "<group>"; };
+		D030AC6C18E13EBE00EA772E /* Hero.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Hero.cpp; path = Classes/Model/Hero.cpp; sourceTree = "<group>"; };
+		D030AC6D18E13EBE00EA772E /* Hero.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Hero.h; path = Classes/Model/Hero.h; sourceTree = "<group>"; };
+		D030AC7018E13F1C00EA772E /* HeroView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HeroView.cpp; path = Classes/View/HeroView.cpp; sourceTree = "<group>"; };
+		D030AC7118E13F1C00EA772E /* HeroView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HeroView.h; path = Classes/View/HeroView.h; sourceTree = "<group>"; };
+		D030AC7218E13F1C00EA772E /* HeroViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HeroViewDelegate.h; path = Classes/View/HeroViewDelegate.h; sourceTree = "<group>"; };
+		D030AC7518E1429100EA772E /* HeroController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HeroController.cpp; path = Classes/Controller/HeroController.cpp; sourceTree = "<group>"; };
+		D030AC7618E1429100EA772E /* HeroController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HeroController.h; path = Classes/Controller/HeroController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -947,6 +974,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D02FE6B718E19CC100AC7043 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				D02FE6B818E19CDA00AC7043 /* CCGestureRecognizer.cpp */,
+				D02FE6B918E19CDA00AC7043 /* CCGestureRecognizer.h */,
+				D02FE6BA18E19CDA00AC7043 /* CCSwipeGestureRecognizer.cpp */,
+				D02FE6BB18E19CDA00AC7043 /* CCSwipeGestureRecognizer.h */,
+				D02FE6BC18E19CDA00AC7043 /* CCTapGestureRecognizer.cpp */,
+				D02FE6BD18E19CDA00AC7043 /* CCTapGestureRecognizer.h */,
+			);
+			name = Library;
+			sourceTree = "<group>";
+		};
 		D030A48818E1353B00EA772E = {
 			isa = PBXGroup;
 			children = (
@@ -994,6 +1034,9 @@
 		D030A4A518E1353B00EA772E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D030AC6218E13C7000EA772E /* background.png */,
+				D030AC6318E13C7000EA772E /* enemy.png */,
+				D030AC6418E13C7000EA772E /* hero.png */,
 				D030A4A618E1353B00EA772E /* CloseNormal.png */,
 				D030A4A818E1353B00EA772E /* CloseSelected.png */,
 				D030A4AA18E1353B00EA772E /* Default.png */,
@@ -2192,12 +2235,46 @@
 		D030A86718E1353F00EA772E /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				D02FE6B718E19CC100AC7043 /* Library */,
+				D030AC7418E1426A00EA772E /* Controller */,
+				D030AC6F18E13F0900EA772E /* View */,
+				D030AC6B18E13EB000EA772E /* Model */,
+				D030AC6A18E13DBC00EA772E /* CommonProtocols.h */,
 				D030A86818E1353F00EA772E /* AppDelegate.h */,
 				D030A86918E1353F00EA772E /* AppDelegate.cpp */,
-				D030A86B18E1353F00EA772E /* HelloWorldScene.h */,
-				D030A86C18E1353F00EA772E /* HelloWorldScene.cpp */,
+				D030A86B18E1353F00EA772E /* SBScene.h */,
+				D030A86C18E1353F00EA772E /* SBScene.cpp */,
 			);
 			name = Classes;
+			sourceTree = "<group>";
+		};
+		D030AC6B18E13EB000EA772E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D030AC6C18E13EBE00EA772E /* Hero.cpp */,
+				D030AC6D18E13EBE00EA772E /* Hero.h */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		D030AC6F18E13F0900EA772E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D030AC7018E13F1C00EA772E /* HeroView.cpp */,
+				D030AC7118E13F1C00EA772E /* HeroView.h */,
+				D030AC7218E13F1C00EA772E /* HeroViewDelegate.h */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		D030AC7418E1426A00EA772E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				D030AC7518E1429100EA772E /* HeroController.cpp */,
+				D030AC7618E1429100EA772E /* HeroController.h */,
+				D02FE6B318E16F3900AC7043 /* HeroControllerDelegate.h */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2251,6 +2328,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D030A4B718E1353B00EA772E /* Icon.png in Resources */,
+				D030AC6718E13C7000EA772E /* hero.png in Resources */,
+				D030AC6518E13C7000EA772E /* background.png in Resources */,
 				D030A55A18E1353C00EA772E /* ChangeLog in Resources */,
 				D030A4A718E1353B00EA772E /* CloseNormal.png in Resources */,
 				D030A4B318E1353B00EA772E /* Icon-Small.png in Resources */,
@@ -2259,6 +2338,7 @@
 				D030A4B118E1353B00EA772E /* Icon-Small-50.png in Resources */,
 				D030A4BB18E1353B00EA772E /* iTunesArtwork in Resources */,
 				D030A4B518E1353B00EA772E /* Icon-Small@2x.png in Resources */,
+				D030AC6618E13C7000EA772E /* enemy.png in Resources */,
 				D030A4AB18E1353B00EA772E /* Default.png in Resources */,
 				D030A4A918E1353B00EA772E /* CloseSelected.png in Resources */,
 				D030A4B918E1353B00EA772E /* Icon@2x.png in Resources */,
@@ -2310,6 +2390,7 @@
 				D030A6CA18E1353D00EA772E /* SimpleAudioEngine_objc.m in Sources */,
 				D030A80D18E1353E00EA772E /* b2ContactManager.cpp in Sources */,
 				D030A84618E1353F00EA772E /* b2MouseJoint.cpp in Sources */,
+				D02FE6C018E19CDA00AC7043 /* CCTapGestureRecognizer.cpp in Sources */,
 				D030A83018E1353F00EA772E /* b2EdgeAndPolygonContact.cpp in Sources */,
 				D030A79E18E1353E00EA772E /* Attachment.cpp in Sources */,
 				D030A6AE18E1353D00EA772E /* CCTouch.cpp in Sources */,
@@ -2361,6 +2442,7 @@
 				D030A72418E1353E00EA772E /* CCComAttribute.cpp in Sources */,
 				D030A69E18E1353D00EA772E /* CCTileMapAtlas.cpp in Sources */,
 				D030A85818E1353F00EA772E /* b2WheelJoint.cpp in Sources */,
+				D030AC6E18E13EBE00EA772E /* Hero.cpp in Sources */,
 				D030A58B18E1353C00EA772E /* CCScene.cpp in Sources */,
 				D030A85518E1353F00EA772E /* b2WeldJoint.cpp in Sources */,
 				D030A66A18E1353D00EA772E /* TGAlib.cpp in Sources */,
@@ -2382,10 +2464,11 @@
 				D030A76F18E1353E00EA772E /* CCSorting.cpp in Sources */,
 				D030A7DE18E1353E00EA772E /* b2Distance.cpp in Sources */,
 				D030A6D918E1353D00EA772E /* CCBFileLoader.cpp in Sources */,
+				D030AC7718E1429200EA772E /* HeroController.cpp in Sources */,
 				D030A5D918E1353C00EA772E /* CCDevice.mm in Sources */,
 				D030A82A18E1353F00EA772E /* b2ContactSolver.cpp in Sources */,
 				D030A50118E1353B00EA772E /* ccFPSImages.c in Sources */,
-				D030A86D18E1353F00EA772E /* HelloWorldScene.cpp in Sources */,
+				D030A86D18E1353F00EA772E /* SBScene.cpp in Sources */,
 				D030A7E118E1353E00EA772E /* b2DynamicTree.cpp in Sources */,
 				D030A5F818E1353C00EA772E /* AccelerometerSimulation.m in Sources */,
 				D030A4D918E1353B00EA772E /* CCActionGrid3D.cpp in Sources */,
@@ -2395,6 +2478,7 @@
 				D030A85C18E1353F00EA772E /* b2Rope.cpp in Sources */,
 				D030A53018E1353C00EA772E /* CCDrawingPrimitives.cpp in Sources */,
 				D030A57018E1353C00EA772E /* vec2.c in Sources */,
+				D030AC7318E13F1C00EA772E /* HeroView.cpp in Sources */,
 				D030A80318E1353E00EA772E /* b2StackAllocator.cpp in Sources */,
 				D030A61A18E1353C00EA772E /* ccGLStateCache.cpp in Sources */,
 				D030A4F818E1353B00EA772E /* CCCamera.cpp in Sources */,
@@ -2499,6 +2583,7 @@
 				D030A56A18E1353C00EA772E /* quaternion.c in Sources */,
 				D030A4DC18E1353B00EA772E /* CCActionInstant.cpp in Sources */,
 				D030A72718E1353E00EA772E /* CCComAudio.cpp in Sources */,
+				D02FE6BF18E19CDA00AC7043 /* CCSwipeGestureRecognizer.cpp in Sources */,
 				D030A6C718E1353D00EA772E /* SimpleAudioEngine.mm in Sources */,
 				D030A77518E1353E00EA772E /* CCTableViewCell.cpp in Sources */,
 				D030A64318E1353D00EA772E /* CCSpriteFrameCache.cpp in Sources */,
@@ -2508,6 +2593,7 @@
 				D030A59418E1353C00EA772E /* CCTransitionProgress.cpp in Sources */,
 				D030A5E918E1353C00EA772E /* CCImage.mm in Sources */,
 				D030A63718E1353D00EA772E /* CCAnimationCache.cpp in Sources */,
+				D02FE6BE18E19CDA00AC7043 /* CCGestureRecognizer.cpp in Sources */,
 				D030A5A218E1353C00EA772E /* CCMotionStreak.cpp in Sources */,
 				D030A80A18E1353E00EA772E /* b2Body.cpp in Sources */,
 				D030A51518E1353B00EA772E /* CCDictionary.cpp in Sources */,
@@ -2684,6 +2770,7 @@
 				D030A87418E1353F00EA772E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

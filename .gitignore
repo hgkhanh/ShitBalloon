@@ -1,0 +1,14 @@
+# Ignore files by xcode4
+*.xcscheme
+*.xcworkspacedata
+*.xcuserstate
+xcschememanagement.*
+
+# Ignore files build by ndk and eclipse
+libs/
+bin/
+obj/
+assets/
+.classpath
+.project
+.cproject
