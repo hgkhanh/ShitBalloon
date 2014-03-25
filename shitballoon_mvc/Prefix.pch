@@ -1,0 +1,8 @@
+//
+// Prefix header for all source files of the 'shitballoon_mvc' target in the 'shitballoon_mvc' project
+//
+
+#ifdef __OBJC__
+	#import <Foundation/Foundation.h>
+	#import <UIKit/UIKit.h>
+#endif
