@@ -11,12 +11,12 @@
 
 class HeroControllerDelegate {
 public:
-    virtual void touch(b2Body* aBody) = 0;
-    virtual void tap(b2Body* aBody) = 0;
-    virtual void swipeUp(b2Body* aBody) = 0;
-    virtual void swipeDown(b2Body* aBody) = 0;
-    virtual void swipeLeft(b2Body* aBody) = 0;
-    virtual void swipeRight(b2Body* aBody) = 0;
+    virtual void touch() = 0;
+    virtual void tap() = 0;
+    virtual void swipeUp() = 0;
+    virtual void swipeDown() = 0;
+    virtual void swipeLeft() = 0;
+    virtual void swipeRight() = 0;
 };
 
 #endif

@@ -140,55 +140,34 @@ void SBScene::initTouch()
 void SBScene::ccTouchesBegan(cocos2d::CCSet* touches, cocos2d::CCEvent* event){
     //CCLog("ccTouchesBegan");
     //Iterate over the bodies in the physics world
-	for (b2Body* b = _world->GetBodyList(); b; b = b->GetNext()) {
-		if (b->GetUserData() != NULL){
-            CCSprite *curSprite = (CCSprite *) b->GetUserData();
-            if(curSprite->getTag() == kHeroTag){
-                this->getDelegate()->touch(b);
-            }
-        }
-    }
+    this->getDelegate()->touch();
 }
 
 void SBScene::didTap(CCObject * obj){
     //CCLog("didTap");
-    for (b2Body* b = _world->GetBodyList(); b; b = b->GetNext()) {
-		if (b->GetUserData() != NULL){
-            CCSprite *curSprite = (CCSprite *) b->GetUserData();
-            if(curSprite->getTag() ==kHeroTag){
-                this->getDelegate()->tap(b);
-            }
-        }
-    }
+    this->getDelegate()->tap();
 }
 
 void SBScene::didSwipe(CCObject * obj)
 {
     //CCLog("didSwipe");
     CCSwipe * swipe = (CCSwipe*)obj;
-    for (b2Body* b = _world->GetBodyList(); b; b = b->GetNext()) {
-		if (b->GetUserData() != NULL) {
-            CCSprite *curSprite = (CCSprite *) b->GetUserData();
-            if(curSprite->getTag() == kHeroTag){
-                if(swipe->direction == kSwipeGestureRecognizerDirectionRight)
-                {
-                    this->getDelegate()->swipeRight(b);
-                    
-                }
-                else if(swipe->direction == kSwipeGestureRecognizerDirectionLeft)
-                {
-                    this->getDelegate()->swipeLeft(b);
-                }
-                else if(swipe->direction == kSwipeGestureRecognizerDirectionUp)
-                {
-                    this->getDelegate()->swipeUp(b);
-                }
-                else if(swipe->direction == kSwipeGestureRecognizerDirectionDown)
-                {
-                    this->getDelegate()->swipeDown(b);
-                }
-            }
-        }
+   
+    if(swipe->direction == kSwipeGestureRecognizerDirectionRight)
+    {
+        this->getDelegate()->swipeRight();
+    }
+    else if(swipe->direction == kSwipeGestureRecognizerDirectionLeft)
+    {
+        this->getDelegate()->swipeLeft();
+    }
+    else if(swipe->direction == kSwipeGestureRecognizerDirectionUp)
+    {
+        this->getDelegate()->swipeUp();
+    }
+    else if(swipe->direction == kSwipeGestureRecognizerDirectionDown)
+    {
+        this->getDelegate()->swipeDown();
     }
 }
 

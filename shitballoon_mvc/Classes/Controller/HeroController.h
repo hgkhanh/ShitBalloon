@@ -24,12 +24,12 @@ public:
     HeroController();
     ~HeroController();
     static HeroController* createHeroWithPos(CCPoint aPos);
-    virtual void touch(b2Body* aBody);
-    virtual void tap(b2Body* aBody);
-    virtual void swipeUp(b2Body* aBody);
-    virtual void swipeDown(b2Body* aBody);
-    virtual void swipeLeft(b2Body* aBody);
-    virtual void swipeRight(b2Body* aBody);
+    virtual void touch();
+    virtual void tap();
+    virtual void swipeUp();
+    virtual void swipeDown();
+    virtual void swipeLeft();
+    virtual void swipeRight();
 };
 
 #endif /* defined(__shitballoon_mvc__HeroController__) */
