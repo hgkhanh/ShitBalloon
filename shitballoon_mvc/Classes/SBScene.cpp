@@ -207,6 +207,10 @@ void SBScene::tick(float dt)
             CCSprite* myActor = (CCSprite*)b->GetUserData();
             myActor->setPosition( CCPointMake( b->GetPosition().x * PTM_RATIO, b->GetPosition().y * PTM_RATIO) );
             myActor->setRotation( -1 * CC_RADIANS_TO_DEGREES(b->GetAngle()) );
+            // air resistance
+			b2Vec2 vel = b->GetLinearVelocity();
+			float speed = vel.Normalize(); //normalizes vector and returns length
+			b->ApplyForce( AIR_RESIST_SCALE * speed * speed * -vel, b->GetWorldCenter() );
         }    
     }
     

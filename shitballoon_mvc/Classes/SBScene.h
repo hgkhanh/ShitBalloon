@@ -16,6 +16,7 @@
 #include "HeroControllerDelegate.h"
 
 #define PTM_RATIO 32.0
+#define AIR_RESIST_SCALE 0.2
 using namespace cocos2d;
 
 class SBScene : public CCLayer  {
