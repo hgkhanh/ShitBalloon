@@ -14,15 +14,17 @@
 #include "CCTapGestureRecognizer.h"
 #include "CCSwipeGestureRecognizer.h"
 #include "HeroControllerDelegate.h"
+#include "SpawnPointController.h"
 
 #define PTM_RATIO 32.0
 #define AIR_RESIST_SCALE 0.2
 using namespace cocos2d;
 
-class SBScene : public CCLayer  {
+class SBScene : public CCLayer
+{
 private:
     CC_SYNTHESIZE(HeroView*, _heroView, HeroView);
-    CC_SYNTHESIZE(CCArray*, _enemyViewArray, EnemyViewArray);
+    CC_SYNTHESIZE(CCArray*, _spawnPointArray, SpawnPointArray);
     CC_SYNTHESIZE(HeroControllerDelegate*, _delegate, Delegate);
     b2World* _world;
     //SBContactListener* _contactListener;
@@ -33,11 +35,13 @@ public:
     static CCScene* scene();
     void addBackground();
     void addHero(CCPoint p);
+    void addSpawnPoint(CCPoint p);
+
     void initPhysics();
     void initTouch();
     virtual bool init();
     
-    virtual void ccTouchesBegan(cocos2d::CCSet* touches, cocos2d::CCEvent* event);
+    virtual void ccTouchesBegan(CCSet* touches, CCEvent* event);
     virtual void didSwipe(CCObject * obj);
     virtual void didTap(CCObject * obj);
     void tick(float dt);

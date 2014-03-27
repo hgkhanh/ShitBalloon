@@ -15,7 +15,7 @@ using namespace CocosDenshion;
 
 SBScene::SBScene()
 {
-
+    this->_spawnPointArray = new CCArray();
 }
 
 SBScene::~SBScene()
@@ -49,6 +49,7 @@ bool SBScene::init(){
     // init object
     this->addBackground();
     this->addHero(ccp(_screenSize.width * 0.5, _screenSize.height * 0.9));
+    this->addSpawnPoint(ccp(_screenSize.width * 0.2, _screenSize.height * 0.5));
     
     this->schedule(schedule_selector(SBScene::tick));
     
@@ -115,6 +116,13 @@ void SBScene::addHero(CCPoint p)
     
     //Set Delegate
     this->setDelegate(heroController);
+}
+
+void SBScene::addSpawnPoint(CCPoint p)
+{
+    //Create  SP MVC
+    SpawnPointController* spawnPointController  = SpawnPointController::createWithPos(p);
+    this->_spawnPointArray->addObject(spawnPointController->getView());
 }
 
 void SBScene::initTouch()
@@ -184,7 +192,7 @@ void SBScene::tick(float dt)
         if (b->GetUserData() != NULL) {
             //Synchronize the AtlasSprites position and rotation with the corresponding body
             CCSprite* myActor = (CCSprite*)b->GetUserData();
-            myActor->setPosition( CCPointMake( b->GetPosition().x * PTM_RATIO, b->GetPosition().y * PTM_RATIO) );
+            myActor->setPosition( ccp( b->GetPosition().x * PTM_RATIO, b->GetPosition().y * PTM_RATIO) );
             myActor->setRotation( -1 * CC_RADIANS_TO_DEGREES(b->GetAngle()) );
             // air resistance
 			b2Vec2 vel = b->GetLinearVelocity();

@@ -23,7 +23,7 @@ private:
     CC_SYNTHESIZE(CharacterStates, _state, State);
     //CC_SYNTHESIZE(CCSprite*, _sprite, Sprite);
     CC_SYNTHESIZE(HeroViewDelegate*, _delegate, Delegate);
-    static const int maxHP = 5;
+    static const int _maxHP = 5;
 public:
     Hero();
     ~Hero();
