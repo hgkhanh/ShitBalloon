@@ -20,15 +20,15 @@ HeroController::~HeroController()
 
 HeroController* HeroController::createHeroWithPos(CCPoint aPos)
 {
-    HeroController* heroController = new HeroController();
     //Model
-    Hero* aHero = Hero::initWithPos(ccp(aPos.x/PTM_RATIO,aPos.y/PTM_RATIO));
-    heroController->setModel(aHero);
+    Hero* aHero = new Hero();
+    aHero->initWithPos(ccp(aPos.x/PTM_RATIO,aPos.y/PTM_RATIO));
+    this->setModel(aHero);
     //View
     HeroView* aView = new HeroView();
     aView->initWithModel(aHero);
-    heroController->setView(aView);
-    return heroController;
+    this->setView(aView);
+    return this;
 }
 
 void HeroController::touch(){

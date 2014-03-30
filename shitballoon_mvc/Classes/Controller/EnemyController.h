@@ -12,11 +12,12 @@
 #include "cocos2d.h"
 #include "Enemy.h"
 #include "EnemyView.h"
-#include "EnemyControllerDelegate.h"
+#include "EnemyController.h"
 
 using namespace cocos2d;
 
-class EnemyController : public CCObject, public EnemyControllerDelegate {
+class EnemyController : public CCObject
+{
 private:
     CC_SYNTHESIZE(Enemy*, _model, Model);
     CC_SYNTHESIZE(EnemyView*, _view, View);

@@ -23,7 +23,7 @@ private:
 public:
     HeroController();
     ~HeroController();
-    static HeroController* createHeroWithPos(CCPoint aPos);
+    HeroController* createHeroWithPos(CCPoint aPos);
     virtual void touch();
     virtual void tap();
     virtual void swipeUp();

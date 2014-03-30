@@ -21,7 +21,7 @@ private:
     CC_SYNTHESIZE(SpawnPoint*, _model, Model);
     CC_SYNTHESIZE(SpawnPointView*, _view, View);
 public:
-    static SpawnPointController* createWithPos(CCPoint aPos);
-    void spawnEnemy();
+    SpawnPointController* createWithPos(CCPoint aPos);
+    void startSpawn();
 };
 #endif /* defined(__shitballoon_mvc__SpawnPointController__) */

@@ -1,15 +1,13 @@
 
-#ifndef __ShitBalloon__EnemyView__
-#define __ShitBalloon__EnemyView__
+#ifndef __shitballoon_mvc__EnemyView__
+#define __shitballoon_mvc__EnemyView__
 
-#include "cocos2d.h"
-#include "Box2D.h"
-#include "CommonProtocols.h"
 #include "EnemyViewDelegate.h"
 #include "Enemy.h"
 
 #define PTM_RATIO 32.0
 using namespace cocos2d;
+
 class EnemyView : public CCLayer, public EnemyViewDelegate {
 private:
     CC_SYNTHESIZE(Enemy*, _model, Model);
@@ -22,4 +20,4 @@ public:
     void initPhysics(b2World* aWorld);
     virtual void updateHPBar();
 };
-#endif /* defined(__ShitBalloon__HeroView__) */
+#endif /* defined(__shitballoon_mvc__EnemyView__) */

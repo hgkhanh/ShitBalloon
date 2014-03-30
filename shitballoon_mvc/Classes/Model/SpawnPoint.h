@@ -9,7 +9,8 @@
 #ifndef __shitballoon_mvc__SpawnPoint__
 #define __shitballoon_mvc__SpawnPoint__
 
-#include "cocos2d.h"
+#include <iostream>
+#include "SpawnPointViewDelegate.h"
 
 using namespace cocos2d;
 
@@ -18,9 +19,10 @@ class SpawnPoint: public CCObject
 private:
     CC_SYNTHESIZE(CCPoint, _position, Position);
     CC_SYNTHESIZE(int, _spawned, Spawned);
+    CC_SYNTHESIZE(SpawnPointViewDelegate*, _delegate, Delegate);
     static const int _capacity = 3;
-
 public:
-    static SpawnPoint* initWithPos(CCPoint aPos);
+    SpawnPoint* initWithPos(CCPoint aPos);
+    void onTimeUp();
 };
 #endif /* defined(__shitballoon_mvc__SpawnPoint__) */

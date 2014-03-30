@@ -6,8 +6,8 @@
 //
 //
 
-#ifndef __ShitBalloon__Hero__
-#define __ShitBalloon__Hero__
+#ifndef __shitballoon_mvc__Enemy__
+#define __shitballoon_mvc__Enemy__
 
 #include <iostream>
 #include "CommonProtocols.h"
@@ -16,9 +16,10 @@
 
 using namespace cocos2d;
 
-class Enemy : public CCObject {
+class Enemy : public CCObject
+{
 private:
-    CC_SYNTHESIZE(CCPoint, _position, Position);
+    CC_SYNTHESIZE(CCPoint, _posotion, Position);
     CC_SYNTHESIZE(int, _currentHP, CurrentHP);
     CC_SYNTHESIZE(CharacterStates, _state, State);
     //CC_SYNTHESIZE(CCSprite*, _sprite, Sprite);
@@ -31,4 +32,4 @@ public:
     void takeDamage();
 };
 
-#endif /* defined(__ShitBalloon__Hero__) */
+#endif /* defined(__shitballoon_mvc__Enemy__) */

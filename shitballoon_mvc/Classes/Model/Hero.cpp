@@ -17,11 +17,10 @@ Hero::~Hero(){
 }
 
 Hero* Hero::initWithPos(CCPoint aPos){
-    Hero* hero = new Hero();
-    hero->setCurrentHP(hero->_maxHP);
-    hero->setState(kCharacterStateAlive);
-    hero->setPosition(aPos);
-    return hero;
+    this->setCurrentHP(this->_maxHP);
+    this->setState(kCharacterStateAlive);
+    this->setPosition(aPos);
+    return this;
 }
 
 void Hero::takeDamage()

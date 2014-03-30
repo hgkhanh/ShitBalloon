@@ -25,7 +25,6 @@ SBScene::~SBScene()
 
 CCScene* SBScene::scene()
 {
-
     // 'scene' is an autorelease object
     CCScene *scene = CCScene::create();
     
@@ -50,6 +49,12 @@ bool SBScene::init(){
     this->addBackground();
     this->addHero(ccp(_screenSize.width * 0.5, _screenSize.height * 0.9));
     this->addSpawnPoint(ccp(_screenSize.width * 0.2, _screenSize.height * 0.5));
+    
+    CCObject* curSPController;
+    CCARRAY_FOREACH(this->_spawnPointArray, curSPController)
+    {
+        ((SpawnPointController*) curSPController)->startSpawn();
+    }
     
     this->schedule(schedule_selector(SBScene::tick));
     
@@ -108,7 +113,8 @@ void SBScene::initPhysics()
 void SBScene::addHero(CCPoint p)
 {
     //Create  Hero MVC
-    HeroController* heroController  = HeroController::createHeroWithPos(p);
+    HeroController* heroController  = new HeroController();
+    heroController->createHeroWithPos(p);
     this->_heroView = heroController->getView();
     this->_heroView->initPhysics(_world);
     this->addChild(_heroView->getSprite());
@@ -121,8 +127,9 @@ void SBScene::addHero(CCPoint p)
 void SBScene::addSpawnPoint(CCPoint p)
 {
     //Create  SP MVC
-    SpawnPointController* spawnPointController  = SpawnPointController::createWithPos(p);
-    this->_spawnPointArray->addObject(spawnPointController->getView());
+    SpawnPointController* spawnPointController = new SpawnPointController();
+    spawnPointController->createWithPos(p);
+    this->_spawnPointArray->addObject((CCObject*)spawnPointController->getView());
 }
 
 void SBScene::initTouch()

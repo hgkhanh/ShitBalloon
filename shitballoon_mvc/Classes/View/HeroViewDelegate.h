@@ -6,11 +6,8 @@
 //
 //
 
-#ifndef __ShitBalloon__HeroViewDelegate__
-#define __ShitBalloon__HeroViewDelegate__
-
-#include <iostream>
-#include "cocos2d.h"
+#ifndef shitballoon_mvc_HeroViewDelegate_h
+#define shitballoon_mvc_HeroViewDelegate_h
 
 class HeroViewDelegate
 {
@@ -18,4 +15,4 @@ public:
     virtual void updateHPBar() = 0;
 };
 
-#endif /* defined(__ShitBalloon__HeroViewDelegate__) */
+#endif /* defined(__shitballoon_mvc__HeroViewDelegate__) */

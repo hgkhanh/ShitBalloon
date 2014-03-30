@@ -10,18 +10,18 @@
 
 SpawnPointController* SpawnPointController::createWithPos(CCPoint aPos)
 {
-    SpawnPointController* aSPController = new SpawnPointController();
     //create MOdel
-    SpawnPoint* aModel = SpawnPoint::initWithPos(ccp(aPos.x/PTM_RATIO,aPos.y/PTM_RATIO));
-    aSPController->setModel(aModel);
+    SpawnPoint* aModel = new SpawnPoint();
+    aModel->initWithPos(ccp(aPos.x/PTM_RATIO,aPos.y/PTM_RATIO));
+    this->setModel(aModel);
     // create View
     SpawnPointView* aView =  new SpawnPointView();
     aView->initWithModel(aModel);
-    aSPController->setView(aView);
-    return aSPController;
+    this->setView(aView);
+    return this;
 }
 
-void SpawnPointController::spawnEnemy()
+void SpawnPointController::startSpawn()
 {
-    
+    // kick start timer in SP Model
 }

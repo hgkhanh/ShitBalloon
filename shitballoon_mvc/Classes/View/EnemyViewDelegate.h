@@ -6,11 +6,8 @@
 //
 //
 
-#ifndef __ShitBalloon__EnemyViewDelegate__
-#define __ShitBalloon__EnemyViewDelegate__
-
-#include <iostream>
-#include "cocos2d.h"
+#ifndef shitballoon_mvc_EnemyControllerDelegate_h
+#define shitballoon_mvc_EnemyControllerDelegate_h
 
 class EnemyViewDelegate
 {
@@ -18,4 +15,4 @@ public:
     virtual void updateHPBar() = 0;
 };
 
-#endif /* defined(__ShitBalloon__EnemyViewDelegate__) */
+#endif /* defined(__shitballoon_mvc__EnemyViewDelegate__) */

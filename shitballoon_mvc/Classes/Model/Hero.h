@@ -6,8 +6,8 @@
 //
 //
 
-#ifndef __ShitBalloon__Hero__
-#define __ShitBalloon__Hero__
+#ifndef __shitballoon_mvc__Hero__
+#define __shitballoon_mvc__Hero__
 
 #include <iostream>
 #include "CommonProtocols.h"
@@ -27,8 +27,8 @@ private:
 public:
     Hero();
     ~Hero();
-    static Hero* initWithPos(CCPoint aPos);
+    Hero* initWithPos(CCPoint aPos);
     void takeDamage();
 };
 
-#endif /* defined(__ShitBalloon__Hero__) */
+#endif /* defined(__shitballoon_mvc__Hero__) */

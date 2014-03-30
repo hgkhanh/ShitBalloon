@@ -6,17 +6,18 @@
 //
 //
 
-#ifndef __ShitBalloon__HeroView__
-#define __ShitBalloon__HeroView__
+#ifndef __shitballoon_mvc__HeroView__
+#define __shitballoon_mvc__HeroView__
 
 #include "cocos2d.h"
 #include "Box2D.h"
 #include "CommonProtocols.h"
-#include "HeroViewDelegate.h"
 #include "Hero.h"
+
 
 #define PTM_RATIO 32.0
 using namespace cocos2d;
+
 class HeroView : public CCLayer, public HeroViewDelegate {
 private:
     CC_SYNTHESIZE(Hero*, _model, Model);
@@ -29,4 +30,4 @@ public:
     void initPhysics(b2World* aWorld);
     virtual void updateHPBar();
 };
-#endif /* defined(__ShitBalloon__HeroView__) */
+#endif /* defined(__shitballoon_mvc__HeroView__) */
