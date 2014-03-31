@@ -8,6 +8,16 @@
 
 #include "SpawnPoint.h"
 
+SpawnPoint::SpawnPoint()
+{
+    
+}
+
+SpawnPoint::~SpawnPoint()
+{
+    
+}
+
 SpawnPoint* SpawnPoint::initWithPos(CCPoint aPos){
     this->setPosition(aPos);
     this->setSpawned(_capacity);
@@ -17,5 +27,5 @@ SpawnPoint* SpawnPoint::initWithPos(CCPoint aPos){
 void SpawnPoint::onTimeUp()
 {
     // spawn next enemy
-    this->_delegate->spawnNow();
+    this->getDelegate()->spawnNow();
 }

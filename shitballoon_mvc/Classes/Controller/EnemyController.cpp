@@ -20,13 +20,13 @@ EnemyController::~EnemyController()
 
 EnemyController* EnemyController::createEnemyWithPos(CCPoint aPos)
 {
-    EnemyController* enemyController = new EnemyController();
     //Model
     Enemy* anEnemy = Enemy::initWithPos(ccp(aPos.x/PTM_RATIO,aPos.y/PTM_RATIO));
-    enemyController->setModel(anEnemy);
+    this->setModel(anEnemy);
     //View
     EnemyView* aView = new EnemyView();
     aView->initWithModel(anEnemy);
-    enemyController->setView(aView);
-    return enemyController;
+    this->setView(aView);
+    
+    return this;
 }

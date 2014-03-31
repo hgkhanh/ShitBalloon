@@ -8,15 +8,25 @@
 
 #include "SpawnPointController.h"
 
-SpawnPointController* SpawnPointController::createWithPos(CCPoint aPos)
+SpawnPointController::SpawnPointController()
+{
+    this->_enemyList = new CCArray();
+}
+
+SpawnPointController::~SpawnPointController()
+{
+    
+}
+
+SpawnPointController* SpawnPointController::createWithPos(CCPoint aPos, CCLayer* aLayer, b2World* aWorld)
 {
     //create MOdel
     SpawnPoint* aModel = new SpawnPoint();
-    aModel->initWithPos(ccp(aPos.x/PTM_RATIO,aPos.y/PTM_RATIO));
+    aModel->initWithPos(ccp(aPos.x,aPos.y));
     this->setModel(aModel);
+    aModel->setDelegate(this);
     // create View
-    SpawnPointView* aView =  new SpawnPointView();
-    aView->initWithModel(aModel);
+    SpawnPointView* aView =  SpawnPointView::initWithModel(aModel, aLayer, aWorld);
     this->setView(aView);
     return this;
 }
@@ -24,4 +34,18 @@ SpawnPointController* SpawnPointController::createWithPos(CCPoint aPos)
 void SpawnPointController::startSpawn()
 {
     // kick start timer in SP Model
+}
+
+void SpawnPointController::spawnNow()
+{
+    //create Enemy MVC
+    EnemyController* enemyController =  new EnemyController();
+    enemyController->createEnemyWithPos(this->_model->getPosition());
+    b2World* curWorld = this->getView()->getWorld();
+    enemyController->getView()->initPhysics(curWorld);
+    this->getEnemyList()->addObject(enemyController);
+    // add to current Scene
+    
+    CCLayer* curLayer = this->getView()->getLayer();
+    curLayer->addChild(enemyController->getView()->getSprite());
 }

@@ -15,7 +15,7 @@ using namespace CocosDenshion;
 
 SBScene::SBScene()
 {
-    this->_spawnPointArray = new CCArray();
+    this->_spawnPointControllerArray = new CCArray();
 }
 
 SBScene::~SBScene()
@@ -49,12 +49,16 @@ bool SBScene::init(){
     this->addBackground();
     this->addHero(ccp(_screenSize.width * 0.5, _screenSize.height * 0.9));
     this->addSpawnPoint(ccp(_screenSize.width * 0.2, _screenSize.height * 0.5));
+    this->addSpawnPoint(ccp(_screenSize.width * 0.6, _screenSize.height * 0.7));
+
     
     CCObject* curSPController;
-    CCARRAY_FOREACH(this->_spawnPointArray, curSPController)
+    CCARRAY_FOREACH(this->_spawnPointControllerArray, curSPController)
     {
-        ((SpawnPointController*) curSPController)->startSpawn();
+        ((SpawnPointController*) curSPController)->spawnNow();
     }
+    
+    
     
     this->schedule(schedule_selector(SBScene::tick));
     
@@ -115,9 +119,9 @@ void SBScene::addHero(CCPoint p)
     //Create  Hero MVC
     HeroController* heroController  = new HeroController();
     heroController->createHeroWithPos(p);
-    this->_heroView = heroController->getView();
-    this->_heroView->initPhysics(_world);
-    this->addChild(_heroView->getSprite());
+    this->_heroController = heroController;
+    this->_heroController->getView()->initPhysics(_world);
+    this->addChild(_heroController->getView()->getSprite());
     
     
     //Set Delegate
@@ -128,8 +132,9 @@ void SBScene::addSpawnPoint(CCPoint p)
 {
     //Create  SP MVC
     SpawnPointController* spawnPointController = new SpawnPointController();
-    spawnPointController->createWithPos(p);
-    this->_spawnPointArray->addObject((CCObject*)spawnPointController->getView());
+    spawnPointController->createWithPos(p, this , this->getWorld());
+    
+    this->_spawnPointControllerArray->addObject(spawnPointController);
 }
 
 void SBScene::initTouch()
@@ -192,19 +197,37 @@ void SBScene::tick(float dt)
 	int positionIterations = 1;
 	_world->Step(dt, velocityIterations, positionIterations);
 
-    
+    srand ( time(NULL) );
+
     //Iterate over the bodies in the physics world
     for (b2Body* b = _world->GetBodyList(); b; b = b->GetNext())
     {
         if (b->GetUserData() != NULL) {
             //Synchronize the AtlasSprites position and rotation with the corresponding body
-            CCSprite* myActor = (CCSprite*)b->GetUserData();
-            myActor->setPosition( ccp( b->GetPosition().x * PTM_RATIO, b->GetPosition().y * PTM_RATIO) );
-            myActor->setRotation( -1 * CC_RADIANS_TO_DEGREES(b->GetAngle()) );
+            CCSprite* curSprite = (CCSprite*)b->GetUserData();
+            curSprite->setPosition( ccp( b->GetPosition().x * PTM_RATIO, b->GetPosition().y * PTM_RATIO) );
+            curSprite->setRotation( -1 * CC_RADIANS_TO_DEGREES(b->GetAngle()) );
             // air resistance
 			b2Vec2 vel = b->GetLinearVelocity();
 			float speed = vel.Normalize(); //normalizes vector and returns length
 			b->ApplyForce( AIR_RESIST_SCALE * speed * speed * -vel, b->GetWorldCenter() );
+            
+            //random enemy movement
+            if(curSprite->getTag() == kEnemyTag){
+                if(rand() % 2 == 0 ){
+                    b->SetLinearVelocity(b2Vec2(0, 0));
+                    int x = rand() % (2*MAX_FORCE) - MAX_FORCE;
+                    int y = rand() % (2*MAX_FORCE) - MAX_FORCE;
+                    if(y>0){
+                        b2Vec2 flapForce = b2Vec2(0,150/PTM_RATIO);
+                        b->ApplyLinearImpulse(flapForce,b->GetPosition());
+                    }
+                    b2Vec2 enemyForce = b2Vec2(x/PTM_RATIO,y/PTM_RATIO);
+                    b->ApplyLinearImpulse(enemyForce,b->GetPosition());
+                }
+                
+            }
+
         }    
     }
     

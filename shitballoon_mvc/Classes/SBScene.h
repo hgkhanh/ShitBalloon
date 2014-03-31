@@ -18,15 +18,16 @@
 
 #define PTM_RATIO 32.0
 #define AIR_RESIST_SCALE 0.2
+#define MAX_FORCE  150
 using namespace cocos2d;
 
 class SBScene : public CCLayer
 {
 private:
-    CC_SYNTHESIZE(HeroView*, _heroView, HeroView);
-    CC_SYNTHESIZE(CCArray*, _spawnPointArray, SpawnPointArray);
+    CC_SYNTHESIZE(HeroController*, _heroController, HeroController);
+    CC_SYNTHESIZE(CCArray*, _spawnPointControllerArray, SpawnPointControllerArray);
     CC_SYNTHESIZE(HeroControllerDelegate*, _delegate, Delegate);
-    b2World* _world;
+    CC_SYNTHESIZE(b2World*, _world, World);
     //SBContactListener* _contactListener;
     CCSize _screenSize;
 public:

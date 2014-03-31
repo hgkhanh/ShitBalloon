@@ -12,7 +12,6 @@
 #include "cocos2d.h"
 #include "Enemy.h"
 #include "EnemyView.h"
-#include "EnemyController.h"
 
 using namespace cocos2d;
 
@@ -24,7 +23,7 @@ private:
 public:
     EnemyController();
     ~EnemyController();
-    static EnemyController* createEnemyWithPos(CCPoint aPos);
+    EnemyController* createEnemyWithPos(CCPoint aPos);
 };
 
 #endif /* defined(__shitballoon_mvc__HeroController__) */
