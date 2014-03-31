@@ -6,12 +6,6 @@
 //  Copyright __MyCompanyName__ 2014. All rights reserved.
 //
 #include "SBScene.h"
-#include "SimpleAudioEngine.h"
-#include "CommonProtocols.h"
-
-using namespace cocos2d;
-using namespace CocosDenshion;
-
 
 SBScene::SBScene()
 {
@@ -21,6 +15,7 @@ SBScene::SBScene()
 SBScene::~SBScene()
 {
     CC_SAFE_DELETE(_world);
+    delete _contactListener;
 }
 
 CCScene* SBScene::scene()
@@ -41,9 +36,15 @@ bool SBScene::init(){
     }
     this->setTouchEnabled(true);
     _screenSize = CCDirector::sharedDirector()->getWinSize();
+    
+    
     //init Physics and Touch
     this->initPhysics();
     this->initTouch();
+    
+    // Create Contact Listener
+    _contactListener = new SBContactListener();
+    this->_world->SetContactListener(_contactListener);
     
     // init object
     this->addBackground();
@@ -231,8 +232,48 @@ void SBScene::tick(float dt)
         }    
     }
     
+    // Check Contact
+    std::vector<SBContact>::iterator pos;
+    for (pos = _contactListener->_contacts.begin();
+         pos!= _contactListener->_contacts.end();
+         ++pos) {
+        
+        SBContact contact = *pos;
+        
+        // (A : Hero) Hit (B : Enemy)
+        if ((int)contact.fixtureA->GetUserData() == kHeroBodyTag
+            && (int)contact.fixtureB->GetUserData() == kEnemyBalloonTag) {
+            Enemy* curEnemy = getEnemybyBody(contact.fixtureB->GetBody());
+            if  (curEnemy)
+            {
+                curEnemy->takeDamage();
+            }
+        }
+        // (B : Enemy) Hit (A:Hero)
+        else if ((int)contact.fixtureA->GetUserData() == kHeroBalloonTag
+                 && (int)contact.fixtureB->GetUserData() == kEnemyBodyTag) {
+            _heroController->getModel()->takeDamage();
+        }
+
+    }
+    
 }
 
 
 
-
+Enemy* SBScene::getEnemybyBody(b2Body *aBody)
+{
+    CCObject* curSPController;
+    CCARRAY_FOREACH(_spawnPointControllerArray, curSPController)
+    {
+        CCObject* curEnemyController;
+        CCARRAY_FOREACH(((SpawnPointController*)curSPController)->getEnemyList(), curEnemyController)
+        {
+            if (((EnemyController*)curEnemyController)->getView()->getBody() == aBody)
+            {
+                return ((EnemyController*)curEnemyController)->getModel();
+            }
+        }
+     }
+    return NULL;
+}

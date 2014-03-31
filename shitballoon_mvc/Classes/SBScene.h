@@ -10,11 +10,14 @@
 #include "cocos2d.h"
 #include "Box2D.h"
 #include "CommonProtocols.h"
+#include "EnemyController.h"
 #include "HeroController.h"
 #include "CCTapGestureRecognizer.h"
 #include "CCSwipeGestureRecognizer.h"
 #include "HeroControllerDelegate.h"
 #include "SpawnPointController.h"
+#include "SBContactListener.h"
+#include "Enemy.h"
 
 #define PTM_RATIO 32.0
 #define AIR_RESIST_SCALE 0.2
@@ -28,7 +31,7 @@ private:
     CC_SYNTHESIZE(CCArray*, _spawnPointControllerArray, SpawnPointControllerArray);
     CC_SYNTHESIZE(HeroControllerDelegate*, _delegate, Delegate);
     CC_SYNTHESIZE(b2World*, _world, World);
-    //SBContactListener* _contactListener;
+    SBContactListener* _contactListener;
     CCSize _screenSize;
 public:
     SBScene();
@@ -41,6 +44,8 @@ public:
     void initPhysics();
     void initTouch();
     virtual bool init();
+    
+    Enemy* getEnemybyBody(b2Body* aBody);
     
     virtual void ccTouchesBegan(CCSet* touches, CCEvent* event);
     virtual void didSwipe(CCObject * obj);

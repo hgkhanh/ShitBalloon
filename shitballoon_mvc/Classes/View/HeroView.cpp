@@ -85,9 +85,10 @@ void HeroView::initPhysics(b2World* aWorld){
 
 }
 
-void HeroView::updateHPBar(){
+void HeroView::updateHPBar()
+{
     CCString* labelStr = CCString::createWithFormat("%i HP",this->_model->getCurrentHP());
-    CCObject* child = this->_sprite->getChildren();
+    CCObject* child = this->_sprite->getChildren()->objectAtIndex(0);
     if(dynamic_cast<CCLabelTTF*>(child) != NULL){
         ((CCLabelTTF*) child)->setString(labelStr->getCString());
     }

@@ -6,8 +6,8 @@
 //
 //
 
-#ifndef __shitballoon_mvc__HeroController__
-#define __shitballoon_mvc__HeroController__
+#ifndef __shitballoon_mvc__EnemyController__
+#define __shitballoon_mvc__EnemyController__
 
 #include "cocos2d.h"
 #include "Enemy.h"
