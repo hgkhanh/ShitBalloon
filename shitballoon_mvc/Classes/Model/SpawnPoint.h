@@ -15,17 +15,22 @@
 
 using namespace cocos2d;
 
-class SpawnPoint: public CCObject
+class SpawnPoint: public CCLayer
 {
 private:
     CC_SYNTHESIZE(CCPoint, _position, Position);
     CC_SYNTHESIZE(int, _spawned, Spawned);
     CC_SYNTHESIZE(SpawnPointControllerDelegate*, _delegate, Delegate);
-    static const int _capacity = 3;
+    const float _spawnInterval = 1.0f;
+    const int _capacity = 3;
+    static int _enemyCount;
 public:
     SpawnPoint();
     ~SpawnPoint();
     SpawnPoint* initWithPos(CCPoint aPos);
-    void onTimeUp();
+    
+    void startSpawnTimer();
+    void spawnTimeDue();
 };
+
 #endif /* defined(__shitballoon_mvc__SpawnPoint__) */

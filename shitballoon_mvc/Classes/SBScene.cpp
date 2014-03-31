@@ -56,7 +56,7 @@ bool SBScene::init(){
     CCObject* curSPController;
     CCARRAY_FOREACH(this->_spawnPointControllerArray, curSPController)
     {
-        ((SpawnPointController*) curSPController)->spawnNow();
+        ((SpawnPointController*) curSPController)->startSpawn();
     }
     
     

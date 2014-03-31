@@ -24,7 +24,7 @@ private:
     CC_SYNTHESIZE(CharacterStates, _state, State);
     //CC_SYNTHESIZE(CCSprite*, _sprite, Sprite);
     CC_SYNTHESIZE(EnemyViewDelegate*, _delegate, Delegate);
-    static const int maxHP = 5;
+    static const int maxHP = 2;
 public:
     Enemy();
     ~Enemy();

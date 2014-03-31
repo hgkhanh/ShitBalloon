@@ -34,6 +34,7 @@ SpawnPointController* SpawnPointController::createWithPos(CCPoint aPos, CCLayer*
 void SpawnPointController::startSpawn()
 {
     // kick start timer in SP Model
+    _model->startSpawnTimer();
 }
 
 void SpawnPointController::spawnNow()

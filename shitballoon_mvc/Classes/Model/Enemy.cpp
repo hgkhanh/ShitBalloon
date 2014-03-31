@@ -35,6 +35,5 @@ void Enemy::takeDamage()
 
 void Enemy::endHitState(float dt)
 {
-    CCLog("Enemy::endHitState");
     this->setState(kCharacterStateAlive);
 }

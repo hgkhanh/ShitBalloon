@@ -34,6 +34,5 @@ void Hero::takeDamage()
 
 void Hero::endHitState(float dt)
 {
-    CCLog("Hero::endHitState");
     this->setState(kCharacterStateAlive);
 }
