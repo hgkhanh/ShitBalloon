@@ -16,7 +16,7 @@
 
 using namespace cocos2d;
 
-class Enemy : public CCObject
+class Enemy : public CCLayer
 {
 private:
     CC_SYNTHESIZE(CCPoint, _posotion, Position);
@@ -30,6 +30,7 @@ public:
     ~Enemy();
     static Enemy* initWithPos(CCPoint aPos);
     void takeDamage();
+    void endHitState(float dt);
 };
 
 #endif /* defined(__shitballoon_mvc__Enemy__) */

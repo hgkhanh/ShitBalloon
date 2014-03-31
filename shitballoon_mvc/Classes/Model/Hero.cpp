@@ -25,6 +25,15 @@ Hero* Hero::initWithPos(CCPoint aPos){
 
 void Hero::takeDamage()
 {
+    CCLayer::onEnter(); // Must call this for Schedule to work
     this->setCurrentHP(this->getCurrentHP() - 1);
+    this->setState(kCharacterStateHit);
+    this->scheduleOnce(schedule_selector(Hero::endHitState), 1.0f);
     this->getDelegate()->updateHPBar();
+}
+
+void Hero::endHitState(float dt)
+{
+    CCLog("Hero::endHitState");
+    this->setState(kCharacterStateAlive);
 }

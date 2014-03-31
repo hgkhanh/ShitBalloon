@@ -242,17 +242,19 @@ void SBScene::tick(float dt)
         
         // (A : Hero) Hit (B : Enemy)
         if ((int)contact.fixtureA->GetUserData() == kHeroBodyTag
-            && (int)contact.fixtureB->GetUserData() == kEnemyBalloonTag) {
-            Enemy* curEnemy = getEnemybyBody(contact.fixtureB->GetBody());
+            && (int)contact.fixtureB->GetUserData() == kEnemyBalloonTag)
+        {
+            EnemyController* curEnemy = getEnemybyBody(contact.fixtureB->GetBody());
             if  (curEnemy)
             {
-                curEnemy->takeDamage();
+                curEnemy->gotHit();
             }
         }
         // (B : Enemy) Hit (A:Hero)
         else if ((int)contact.fixtureA->GetUserData() == kHeroBalloonTag
-                 && (int)contact.fixtureB->GetUserData() == kEnemyBodyTag) {
-            _heroController->getModel()->takeDamage();
+                 && (int)contact.fixtureB->GetUserData() == kEnemyBodyTag)
+        {
+            _heroController->gotHit();
         }
 
     }
@@ -261,7 +263,7 @@ void SBScene::tick(float dt)
 
 
 
-Enemy* SBScene::getEnemybyBody(b2Body *aBody)
+EnemyController* SBScene::getEnemybyBody(b2Body *aBody)
 {
     CCObject* curSPController;
     CCARRAY_FOREACH(_spawnPointControllerArray, curSPController)
@@ -271,7 +273,7 @@ Enemy* SBScene::getEnemybyBody(b2Body *aBody)
         {
             if (((EnemyController*)curEnemyController)->getView()->getBody() == aBody)
             {
-                return ((EnemyController*)curEnemyController)->getModel();
+                return ((EnemyController*)curEnemyController);
             }
         }
      }

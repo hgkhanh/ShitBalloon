@@ -24,6 +24,9 @@ public:
     HeroController();
     ~HeroController();
     HeroController* createHeroWithPos(CCPoint aPos);
+    
+    void gotHit();
+    
     virtual void touch();
     virtual void tap();
     virtual void swipeUp();

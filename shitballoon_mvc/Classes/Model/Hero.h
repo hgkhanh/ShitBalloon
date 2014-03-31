@@ -16,7 +16,7 @@
 
 using namespace cocos2d;
 
-class Hero : public CCObject {
+class Hero : public CCLayer {
 private:
     CC_SYNTHESIZE(CCPoint, _position, Position);
     CC_SYNTHESIZE(int, _currentHP, CurrentHP);
@@ -29,6 +29,7 @@ public:
     ~Hero();
     Hero* initWithPos(CCPoint aPos);
     void takeDamage();
+    void endHitState(float dt);
 };
 
 #endif /* defined(__shitballoon_mvc__Hero__) */

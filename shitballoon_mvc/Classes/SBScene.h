@@ -45,7 +45,7 @@ public:
     void initTouch();
     virtual bool init();
     
-    Enemy* getEnemybyBody(b2Body* aBody);
+    EnemyController* getEnemybyBody(b2Body* aBody);
     
     virtual void ccTouchesBegan(CCSet* touches, CCEvent* event);
     virtual void didSwipe(CCObject * obj);

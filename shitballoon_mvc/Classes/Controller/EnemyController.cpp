@@ -30,3 +30,10 @@ EnemyController* EnemyController::createEnemyWithPos(CCPoint aPos)
     
     return this;
 }
+
+void EnemyController::gotHit()
+{
+    if (_model->getState() == kCharacterStateAlive) {
+        _model->takeDamage();
+    }
+}

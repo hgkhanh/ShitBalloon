@@ -24,7 +24,17 @@ Enemy* Enemy::initWithPos(CCPoint aPos){
     return enemy;
 }
 
-void Enemy::takeDamage(){
+void Enemy::takeDamage()
+{
+    CCLayer::onEnter(); // Must call this for Schedule to work
     this->setCurrentHP(this->getCurrentHP() - 1);
+    this->setState(kCharacterStateHit);
+    this->scheduleOnce(schedule_selector(Enemy::endHitState), 1.0f);
     this->getDelegate()->updateHPBar();
+}
+
+void Enemy::endHitState(float dt)
+{
+    CCLog("Enemy::endHitState");
+    this->setState(kCharacterStateAlive);
 }

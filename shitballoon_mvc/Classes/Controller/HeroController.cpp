@@ -31,6 +31,13 @@ HeroController* HeroController::createHeroWithPos(CCPoint aPos)
     return this;
 }
 
+void HeroController::gotHit()
+{
+    if (_model->getState() == kCharacterStateAlive) {
+        _model->takeDamage();
+    }
+}
+
 void HeroController::touch(){
     b2Vec2 force = b2Vec2(0,150/PTM_RATIO);
     b2Body* heroBody = this->_view->getBody();
@@ -65,5 +72,4 @@ void HeroController::swipeRight(){
     b2Vec2 force = b2Vec2(300/PTM_RATIO,0);
     b2Body* heroBody = this->_view->getBody();
     heroBody->ApplyLinearImpulse(force,heroBody->GetWorldCenter());
-    
 }

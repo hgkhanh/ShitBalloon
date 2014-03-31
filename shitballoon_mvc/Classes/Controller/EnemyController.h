@@ -24,6 +24,7 @@ public:
     EnemyController();
     ~EnemyController();
     EnemyController* createEnemyWithPos(CCPoint aPos);
+    void gotHit();
 };
 
 #endif /* defined(__shitballoon_mvc__HeroController__) */
