@@ -23,10 +23,12 @@ private:
     CC_SYNTHESIZE(Hero*, _model, Model);
     CC_SYNTHESIZE(b2Body*, _body, Body);
     CC_SYNTHESIZE(CCSprite*, _sprite, Sprite);
+    CC_SYNTHESIZE(CCLayer*, _layer, Layer);
+    CC_SYNTHESIZE(b2World*, _world, World);
 public:
     HeroView();
     ~HeroView();
-    bool initWithModel(Hero* aHero);
+    bool initWithModel(Hero* aHero, CCLayer* aLayer, b2World* aWorld);
     void initPhysics(b2World* aWorld);
     virtual void updateHPBar();
 };

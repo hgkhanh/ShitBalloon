@@ -13,10 +13,12 @@ private:
     CC_SYNTHESIZE(Enemy*, _model, Model);
     CC_SYNTHESIZE(b2Body*, _body, Body);
     CC_SYNTHESIZE(CCSprite*, _sprite, Sprite);
+    CC_SYNTHESIZE(CCLayer*, _layer, Layer);
+    CC_SYNTHESIZE(b2World*, _world, World);
 public:
     EnemyView();
     ~EnemyView();
-    bool initWithModel(Enemy* anEnemy);
+    bool initWithModel(Enemy* anEnemy, CCLayer* aLayer, b2World* aWorld);
     void initPhysics(b2World* aWorld);
     virtual void updateHPBar();
 };

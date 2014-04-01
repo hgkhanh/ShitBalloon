@@ -24,13 +24,14 @@ private:
     const float _spawnInterval = 1.0f;
     const int _capacity = 3;
     static int _enemyCount;
+    
+    void spawnTimeDue();
 public:
     SpawnPoint();
     ~SpawnPoint();
     SpawnPoint* initWithPos(CCPoint aPos);
     
     void startSpawnTimer();
-    void spawnTimeDue();
 };
 
 #endif /* defined(__shitballoon_mvc__SpawnPoint__) */

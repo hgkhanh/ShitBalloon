@@ -23,13 +23,13 @@ private:
     CC_SYNTHESIZE(int, _currentHP, CurrentHP);
     CC_SYNTHESIZE(CharacterStates, _state, State);
     //CC_SYNTHESIZE(CCSprite*, _sprite, Sprite);
-    CC_SYNTHESIZE(EnemyViewDelegate*, _delegate, Delegate);
+    CC_SYNTHESIZE(EnemyViewDelegate*, _viewDelegate, ViewDelegate);
     static const int maxHP = 2;
 public:
     Enemy();
     ~Enemy();
     static Enemy* initWithPos(CCPoint aPos);
-    void takeDamage();
+    int takeDamage();
     void endHitState(float dt);
 };
 

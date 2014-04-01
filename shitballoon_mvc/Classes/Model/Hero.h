@@ -13,6 +13,7 @@
 #include "CommonProtocols.h"
 #include "Box2D.h"
 #include "HeroViewDelegate.h"
+#include "HeroControllerDelegate.h"
 
 using namespace cocos2d;
 
@@ -21,15 +22,15 @@ private:
     CC_SYNTHESIZE(CCPoint, _position, Position);
     CC_SYNTHESIZE(int, _currentHP, CurrentHP);
     CC_SYNTHESIZE(CharacterStates, _state, State);
-    //CC_SYNTHESIZE(CCSprite*, _sprite, Sprite);
-    CC_SYNTHESIZE(HeroViewDelegate*, _delegate, Delegate);
+    CC_SYNTHESIZE(HeroViewDelegate*, _viewDelegate, ViewDelegate);
     static const int _maxHP = 5;
+    
+    void endHitState(float dt);
 public:
     Hero();
     ~Hero();
     Hero* initWithPos(CCPoint aPos);
-    void takeDamage();
-    void endHitState(float dt);
+    int takeDamage();
 };
 
 #endif /* defined(__shitballoon_mvc__Hero__) */

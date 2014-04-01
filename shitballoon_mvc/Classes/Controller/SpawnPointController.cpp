@@ -41,9 +41,8 @@ void SpawnPointController::spawnNow()
 {
     //create Enemy MVC
     EnemyController* enemyController =  new EnemyController();
-    enemyController->createEnemyWithPos(this->_model->getPosition());
+    enemyController->createEnemyWithPos(this->_model->getPosition(), this->_view->getLayer(), this->_view->getWorld());
     b2World* curWorld = this->getView()->getWorld();
-    enemyController->getView()->initPhysics(curWorld);
     this->getEnemyList()->addObject(enemyController);
     // add to current Scene
     

@@ -24,13 +24,21 @@ Enemy* Enemy::initWithPos(CCPoint aPos){
     return enemy;
 }
 
-void Enemy::takeDamage()
+int Enemy::takeDamage()
 {
     CCLayer::onEnter(); // Must call this for Schedule to work
-    this->setCurrentHP(this->getCurrentHP() - 1);
-    this->setState(kCharacterStateHit);
-    this->scheduleOnce(schedule_selector(Enemy::endHitState), 1.0f);
-    this->getDelegate()->updateHPBar();
+    this->setCurrentHP(_currentHP - 1);
+    if (_currentHP == 0) {
+        this->setState(kCharacterStateDead);
+    }
+    else
+    {
+        // change state, update HP bar
+        this->setState(kCharacterStateHit);
+        this->scheduleOnce(schedule_selector(Enemy::endHitState), 1.0f);
+        this->getViewDelegate()->updateHPBar();
+    }
+    return _state;
 }
 
 void Enemy::endHitState(float dt)

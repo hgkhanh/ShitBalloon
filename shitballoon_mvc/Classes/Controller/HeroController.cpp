@@ -18,7 +18,7 @@ HeroController::~HeroController()
     
 }
 
-HeroController* HeroController::createHeroWithPos(CCPoint aPos)
+HeroController* HeroController::createHeroWithPos(CCPoint aPos, CCLayer* aLayer, b2World* aWorld)
 {
     //Model
     Hero* aHero = new Hero();
@@ -26,16 +26,17 @@ HeroController* HeroController::createHeroWithPos(CCPoint aPos)
     this->setModel(aHero);
     //View
     HeroView* aView = new HeroView();
-    aView->initWithModel(aHero);
+    aView->initWithModel(aHero, aLayer, aWorld);
     this->setView(aView);
     return this;
 }
 
-void HeroController::gotHit()
+int HeroController::gotHit()
 {
     if (_model->getState() == kCharacterStateAlive) {
-        _model->takeDamage();
+        return _model->takeDamage();
     }
+    return _model->getState();
 }
 
 void HeroController::touch(){
@@ -73,3 +74,4 @@ void HeroController::swipeRight(){
     b2Body* heroBody = this->_view->getBody();
     heroBody->ApplyLinearImpulse(force,heroBody->GetWorldCenter());
 }
+

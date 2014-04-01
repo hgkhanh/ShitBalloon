@@ -17,14 +17,16 @@ EnemyView::~EnemyView()
     
 }
 
-bool EnemyView::initWithModel(Enemy* anEnemy)
+bool EnemyView::initWithModel(Enemy* anEnemy, CCLayer* aLayer, b2World* aWorld)
 {
     if(!anEnemy){
         return false;
     }
     this->setModel(anEnemy);
+    this->setWorld(aWorld);
+    this->setLayer(aLayer);
     // Set Enemy Model Delegate to This View
-    anEnemy->setDelegate(this);
+    anEnemy->setViewDelegate(this);
     
     // Create  sprite
     CCSprite* enemySprite = CCSprite::create("enemy.png");
@@ -40,6 +42,9 @@ bool EnemyView::initWithModel(Enemy* anEnemy)
     
     //Set Sprite
     this->setSprite(enemySprite);
+    
+    // init Physics
+    initPhysics(_world);
     return true;
 }
 

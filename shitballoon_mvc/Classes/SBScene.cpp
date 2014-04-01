@@ -119,9 +119,8 @@ void SBScene::addHero(CCPoint p)
 {
     //Create  Hero MVC
     HeroController* heroController  = new HeroController();
-    heroController->createHeroWithPos(p);
+    heroController->createHeroWithPos(p,this,_world);
     this->_heroController = heroController;
-    this->_heroController->getView()->initPhysics(_world);
     this->addChild(_heroController->getView()->getSprite());
     
     
@@ -233,32 +232,58 @@ void SBScene::tick(float dt)
     }
     
     // Check Contact
+    std::vector<b2Body *>toDestroy; // list of Char would be Dead after this contact
     std::vector<SBContact>::iterator pos;
     for (pos = _contactListener->_contacts.begin();
          pos!= _contactListener->_contacts.end();
-         ++pos) {
+         ++pos)
+    {
         
         SBContact contact = *pos;
         
-        // (A : Hero) Hit (B : Enemy)
-        if ((int)contact.fixtureA->GetUserData() == kHeroBodyTag
-            && (int)contact.fixtureB->GetUserData() == kEnemyBalloonTag)
+        if (contact.fixtureA->GetBody() != NULL && contact.fixtureB->GetBody() != NULL)
         {
-            EnemyController* curEnemy = getEnemybyBody(contact.fixtureB->GetBody());
-            if  (curEnemy)
+            // (A : Hero) Hit (B : Enemy)
+            if ((int)contact.fixtureA->GetUserData() == kHeroBodyTag
+                && (int)contact.fixtureB->GetUserData() == kEnemyBalloonTag)
             {
-                curEnemy->gotHit();
+                EnemyController* curEnemy = getEnemybyBody(contact.fixtureB->GetBody());
+                if  (curEnemy)
+                {
+                    int hitResult = curEnemy->gotHit();
+                    if (hitResult == kCharacterStateDead
+                        && std::find(toDestroy.begin(), toDestroy.end(), contact.fixtureB->GetBody() )
+                        == toDestroy.end()) //check if Char was set to Destroy already (==last means not found)
+                    {
+                        toDestroy.push_back(contact.fixtureB->GetBody());
+                    }
+                }
+            }
+            // (B : Enemy) Hit (A:Hero)
+            else if ((int)contact.fixtureA->GetUserData() == kHeroBalloonTag
+                     && (int)contact.fixtureB->GetUserData() == kEnemyBodyTag)
+            {
+                int hitResult = _heroController->gotHit();
+                if (hitResult == kCharacterStateDead
+                    && std::find(toDestroy.begin(), toDestroy.end(), contact.fixtureB->GetBody() )
+                    == toDestroy.end()) //check if Char was set to Destroy already (==last means not found)
+                {
+                    toDestroy.push_back(contact.fixtureA->GetBody());
+                }
             }
         }
-        // (B : Enemy) Hit (A:Hero)
-        else if ((int)contact.fixtureA->GetUserData() == kHeroBalloonTag
-                 && (int)contact.fixtureB->GetUserData() == kEnemyBodyTag)
-        {
-            _heroController->gotHit();
-        }
-
     }
     
+    // Process toDestroy
+    std::vector<b2Body *>::iterator pos2;
+    for(pos2 = toDestroy.begin(); pos2 != toDestroy.end(); ++pos2) {
+        b2Body *bodyToDestroy = *pos2;
+        if (bodyToDestroy->GetUserData() != NULL) {
+            CCSprite *spriteToDestroy = (CCSprite *) bodyToDestroy->GetUserData();
+            this->removeChild(spriteToDestroy, true);
+        }
+        _world->DestroyBody(bodyToDestroy);
+    }
 }
 
 

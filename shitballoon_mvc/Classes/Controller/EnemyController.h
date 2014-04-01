@@ -23,8 +23,8 @@ private:
 public:
     EnemyController();
     ~EnemyController();
-    EnemyController* createEnemyWithPos(CCPoint aPos);
-    void gotHit();
+    EnemyController* createEnemyWithPos(CCPoint aPos, CCLayer* aLayer, b2World* aWorld);
+    int gotHit();
 };
 
 #endif /* defined(__shitballoon_mvc__HeroController__) */

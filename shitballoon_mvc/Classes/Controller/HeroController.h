@@ -23,9 +23,9 @@ private:
 public:
     HeroController();
     ~HeroController();
-    HeroController* createHeroWithPos(CCPoint aPos);
+    HeroController* createHeroWithPos(CCPoint aPos, CCLayer* aLayer, b2World* aWorld);
     
-    void gotHit();
+    int gotHit();
     
     virtual void touch();
     virtual void tap();

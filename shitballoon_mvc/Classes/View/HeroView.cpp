@@ -17,14 +17,16 @@ HeroView::~HeroView()
     
 }
 
-bool HeroView::initWithModel(Hero* aHero)
+bool HeroView::initWithModel(Hero* aHero, CCLayer* aLayer, b2World* aWorld)
 {
     if(!aHero){
         return false;
     }
     this->setModel(aHero);
+    this->setWorld(aWorld);
+    this->setLayer(aLayer);
     // Set Hero Model Delegate to This View
-    aHero->setDelegate(this);
+    aHero->setViewDelegate(this);
 
     // Create  sprite
     CCSprite* heroSprite = CCSprite::create("hero.png");
@@ -40,6 +42,9 @@ bool HeroView::initWithModel(Hero* aHero)
     
     //Set Sprite
     this->setSprite(heroSprite);
+    
+    // init Physics
+    initPhysics(_world);
     return true;
 }
 
