@@ -68,7 +68,7 @@ void EnemyView::initPhysics(b2World* aWorld){
     enemyBodyFixDef.shape = &enemyBodyShape;
     enemyBodyFixDef.userData = (void *) kEnemyBodyTag;
     enemyBodyFixDef.density = 0.4f;
-    enemyBodyFixDef.friction = 0.f;
+    enemyBodyFixDef.friction = 0.2f;
     enemyBodyFixDef.restitution = 0.5f;
     
     this->_body->CreateFixture(&enemyBodyFixDef);

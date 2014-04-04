@@ -95,7 +95,7 @@ void SBScene::addPlatforms(){
     b2FixtureDef platformShapeDef;
     platformShapeDef.shape = &platformShape;
     platformShapeDef.density = 10000.0f;
-    platformShapeDef.friction = 0.4f;
+    platformShapeDef.friction = 0.2f;
     platformShapeDef.restitution = 0.1f;
     b2Fixture* platformFixture = platformBody->CreateFixture(&platformShapeDef);
     

@@ -68,7 +68,7 @@ void HeroView::initPhysics(b2World* aWorld){
     heroBodyFixDef.shape = &heroBodyShape;
     heroBodyFixDef.userData = (void *) kHeroBodyTag;
     heroBodyFixDef.density = 0.4f;
-    heroBodyFixDef.friction = 0.f;
+    heroBodyFixDef.friction = 0.2f;
     heroBodyFixDef.restitution = 0.5f;
     
     this->_body->CreateFixture(&heroBodyFixDef);
