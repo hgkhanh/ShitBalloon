@@ -75,7 +75,10 @@ void SBScene::addBackground(){
 }
 
 void SBScene::addPlatforms(){
-    CCSprite *platform = CCSprite::create("platform.png");
+    CCScale9Sprite *platform = CCScale9Sprite::create("platform.png");
+    platform->setCapInsets(CCRect(15,15,120,45));
+    platform->setContentSize(CCSize(450,45));
+    
     platform->setPosition(ccp(_screenSize.width * 0.5, _screenSize.height * 0.5));
     this->addChild(platform);
     
