@@ -48,6 +48,7 @@ bool SBScene::init(){
     
     // init object
     this->addBackground();
+    this->addPlatforms();
     this->addHero(ccp(_screenSize.width * 0.5, _screenSize.height * 0.9));
     this->addSpawnPoint(ccp(_screenSize.width * 0.2, _screenSize.height * 0.5));
     this->addSpawnPoint(ccp(_screenSize.width * 0.6, _screenSize.height * 0.7));
@@ -73,6 +74,30 @@ void SBScene::addBackground(){
     this->addChild(background);
 }
 
+void SBScene::addPlatforms(){
+    CCSprite *platform = CCSprite::create("platform.png");
+    platform->setPosition(ccp(_screenSize.width * 0.5, _screenSize.height * 0.5));
+    this->addChild(platform);
+    
+    b2BodyDef platformBodyDef;
+    platformBodyDef.type = b2_dynamicBody;
+    platformBodyDef.position.Set(_screenSize.width/2/PTM_RATIO, _screenSize.height/2/PTM_RATIO);
+    platformBodyDef.userData = platform;
+    b2Body* platformBody = this->_world->CreateBody(&platformBodyDef);
+    platformBody->SetGravityScale(0);
+    
+    b2PolygonShape platformShape;
+    platformShape.SetAsBox(platform->getContentSize().width/PTM_RATIO/2, platform->getContentSize().height/PTM_RATIO/2);
+    
+    b2FixtureDef platformShapeDef;
+    platformShapeDef.shape = &platformShape;
+    platformShapeDef.density = 10000.0f;
+    platformShapeDef.friction = 0.4f;
+    platformShapeDef.restitution = 0.1f;
+    b2Fixture* platformFixture = platformBody->CreateFixture(&platformShapeDef);
+    
+}
+
 void SBScene::initPhysics()
 {
     // Define the gravity vector.
@@ -86,12 +111,13 @@ void SBScene::initPhysics()
      */
 	// Define the ground body.
 	b2BodyDef groundBodyDef;
+    groundBodyDef.type = b2_staticBody;
 	groundBodyDef.position.Set(0, 0); // bottom-left corner
     
 	// Call the body factory which allocates memory for the ground body
 	// from a pool and creates the ground box shape (also from a pool).
 	// The body is also added to the world.
-	b2Body* _groundBody = this->_world->CreateBody(&groundBodyDef);
+	_groundBody = this->_world->CreateBody(&groundBodyDef);
     
 	// Define the ground box shape.
 	b2EdgeShape groundBox;

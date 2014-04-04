@@ -33,11 +33,14 @@ private:
     CC_SYNTHESIZE(b2World*, _world, World);
     SBContactListener* _contactListener;
     CCSize _screenSize;
+    CCArray* _platformArray;
+    b2Body* _groundBody;
 public:
     SBScene();
     ~SBScene();
     static CCScene* scene();
     void addBackground();
+    void addPlatforms();
     void addHero(CCPoint p);
     void addSpawnPoint(CCPoint p);
 
