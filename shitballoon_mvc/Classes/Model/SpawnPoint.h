@@ -21,15 +21,15 @@ private:
     CC_SYNTHESIZE(CCPoint, _position, Position);
     CC_SYNTHESIZE(int, _spawned, Spawned);
     CC_SYNTHESIZE(SpawnPointControllerDelegate*, _delegate, Delegate);
-    static const float _spawnInterval = 1.0f;
-    static const int _capacity = 3;
+    CC_SYNTHESIZE(float, _spawnInterval, SpawnInterval);
+    CC_SYNTHESIZE(int, _capacity, Capacity);
     static int _enemyCount;
     
     void spawnTimeDue();
 public:
     SpawnPoint();
     ~SpawnPoint();
-    SpawnPoint* initWithPos(CCPoint aPos);
+    SpawnPoint* init(CCPoint aPos, float spawnInterval, int capacity);
     
     void startSpawnTimer();
 };

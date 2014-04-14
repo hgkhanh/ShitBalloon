@@ -27,7 +27,7 @@ private:
 public:
     SpawnPointController();
     ~SpawnPointController();
-    SpawnPointController* createWithPos(CCPoint aPos, CCLayer* aLayer, b2World* aWorld);
+    SpawnPointController* create(CCPoint aPos, CCLayer* aLayer, b2World* aWorld, float spawnInterval, int capacity);
     void startSpawn();
     virtual void spawnNow();
 };

@@ -18,11 +18,11 @@ SpawnPointController::~SpawnPointController()
     
 }
 
-SpawnPointController* SpawnPointController::createWithPos(CCPoint aPos, CCLayer* aLayer, b2World* aWorld)
+SpawnPointController* SpawnPointController::create(CCPoint aPos, CCLayer* aLayer, b2World* aWorld, float spawnInterval, int capacity)
 {
     //create MOdel
     SpawnPoint* aModel = new SpawnPoint();
-    aModel->initWithPos(ccp(aPos.x,aPos.y));
+    aModel->init(ccp(aPos.x,aPos.y), spawnInterval, capacity);
     this->setModel(aModel);
     aModel->setDelegate(this);
     // create View

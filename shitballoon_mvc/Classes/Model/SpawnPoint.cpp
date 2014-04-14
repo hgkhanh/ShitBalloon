@@ -18,9 +18,11 @@ SpawnPoint::~SpawnPoint()
     
 }
 
-SpawnPoint* SpawnPoint::initWithPos(CCPoint aPos){
+SpawnPoint* SpawnPoint::init(CCPoint aPos, float spawnInterval, int capacity){
     this->setPosition(aPos);
     this->setSpawned(0);
+    this->setSpawnInterval(spawnInterval);
+    this->setCapacity(capacity);
     return this;
 }
 
