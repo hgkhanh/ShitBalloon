@@ -12,7 +12,6 @@
 class HeroControllerDelegate {
 public:
     virtual void touch() = 0;
-    virtual void tap() = 0;
     virtual void swipeUp() = 0;
     virtual void swipeDown() = 0;
     virtual void swipeLeft() = 0;

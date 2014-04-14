@@ -28,7 +28,6 @@ public:
     int gotHit();
     
     virtual void touch();
-    virtual void tap();
     virtual void swipeUp();
     virtual void swipeDown();
     virtual void swipeLeft();

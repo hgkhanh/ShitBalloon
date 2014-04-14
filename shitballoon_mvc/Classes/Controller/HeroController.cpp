@@ -40,15 +40,9 @@ int HeroController::gotHit()
 }
 
 void HeroController::touch(){
-    b2Vec2 force = b2Vec2(0,150/PTM_RATIO);
+    b2Vec2 force = b2Vec2(0,400/PTM_RATIO);
     b2Body* heroBody = this->_view->getBody();
     heroBody->ApplyLinearImpulse(force,heroBody->GetLocalCenter());
-}
-
-void HeroController::tap(){
-    b2Vec2 force = b2Vec2(0,250/PTM_RATIO);
-    b2Body* heroBody = this->_view->getBody();
-    heroBody->ApplyLinearImpulse(force,heroBody->GetWorldCenter());
 }
 
 void HeroController::swipeUp(){

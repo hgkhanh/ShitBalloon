@@ -40,15 +40,12 @@ bool SBScene::init(){
     this->addHero(ccp(_screenSize.width * 0.5, _screenSize.height * 0.9));
     this->addSpawnPoint(ccp(_screenSize.width * 0.2, _screenSize.height * 0.5), 1.0f, 3);
     this->addSpawnPoint(ccp(_screenSize.width * 0.6, _screenSize.height * 0.7), 1.5f, 4);
-
     
     CCObject* curSPController;
     CCARRAY_FOREACH(this->_spawnPointControllerArray, curSPController)
     {
         ((SpawnPointController*) curSPController)->startSpawn();
     }
-    
-    
     
     this->schedule(schedule_selector(SBBaseScene::tick));
     

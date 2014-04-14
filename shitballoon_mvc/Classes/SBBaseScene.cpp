@@ -31,6 +31,8 @@ bool SBBaseScene::init(){
     this->initPhysics();
     this->initTouch();
     
+    _running = true;
+    
     // Create Contact Listener
     _contactListener = new SBContactListener();
     this->_world->SetContactListener(_contactListener);
@@ -43,6 +45,11 @@ void SBBaseScene::addBackground(const char *pszFileName){
     background->setPosition(ccp( _screenSize.width * 0.5, _screenSize.height * 0.5));
     background->setOpacity(150);
     this->addChild(background);
+    
+    _btnPause = CCSprite::create("btn_pause_off.png");
+    _btnPause->setAnchorPoint(ccp(1, 1));
+    _btnPause->setPosition(ccp(_screenSize.width, _screenSize.height));
+    this->addChild(_btnPause);
 }
 
 void SBBaseScene::addPlatforms(const char *pszFileName){
@@ -138,13 +145,6 @@ void SBBaseScene::addSpawnPoint(CCPoint p, float spawnInterval, int capacity)
 
 void SBBaseScene::initTouch()
 {
-    //tap
-    CCTapGestureRecognizer * tap = CCTapGestureRecognizer::create();
-    tap->setTarget(this, callfuncO_selector(SBBaseScene::didTap));
-    tap->setNumberOfTapsRequired(1);
-    tap->setCancelsTouchesInView(true);
-    this->addChild(tap);
-    
     //swipe
     CCSwipeGestureRecognizer * swipe = CCSwipeGestureRecognizer::create();
     swipe->setTarget(this, callfuncO_selector(SBBaseScene::didSwipe));
@@ -157,14 +157,36 @@ void SBBaseScene::initTouch()
 }
 
 void SBBaseScene::ccTouchesBegan(cocos2d::CCSet* touches, cocos2d::CCEvent* event){
-    //CCLog("ccTouchesBegan");
-    //Iterate over the bodies in the physics world
-    this->getDelegate()->touch();
+    CCTouch *touch = (CCTouch *)touches->anyObject();
+    if (touch) {
+        CCPoint tap = touch->getLocation();
+        CCRect boundary;
+        //handle button touches
+        CCSprite * button;
+        
+        button = _btnPause;
+        boundary = button->boundingBox();
+        
+        if (!boundary.containsPoint(tap)) {
+            this->getDelegate()->touch();
+        }
+    }
 }
 
-void SBBaseScene::didTap(CCObject * obj){
-    //CCLog("didTap");
-    this->getDelegate()->tap();
+void SBBaseScene::ccTouchesEnded(cocos2d::CCSet *touches, cocos2d::CCEvent *event){
+    CCTouch *touch = (CCTouch *)touches->anyObject();
+    if (touch) {
+        CCPoint tap = touch->getLocation();
+        CCRect boundary;
+        CCSprite * button;
+        
+        button = _btnPause;
+        boundary = button->boundingBox();
+        
+        if (boundary.containsPoint(tap)) {
+            _running = !_running;
+        }
+    }
 }
 
 void SBBaseScene::didSwipe(CCObject * obj)
@@ -192,6 +214,7 @@ void SBBaseScene::didSwipe(CCObject * obj)
 
 void SBBaseScene::tick(float dt)
 {
+    if (!_running) return;
     int velocityIterations = 8;
 	int positionIterations = 1;
 	_world->Step(dt, velocityIterations, positionIterations);

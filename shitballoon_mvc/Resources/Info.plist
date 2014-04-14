@@ -42,6 +42,8 @@
 		<key>opengles-1</key>
 		<true/>
 	</dict>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 	<key>UIStatusBarHidden</key>
 	<true/>
 </dict>

@@ -35,6 +35,8 @@ private:
     CCSize _screenSize;
     CCArray* _platformArray;
     b2Body* _groundBody;
+    bool _running;
+    CCSprite* _btnPause;
 public:
     SBBaseScene();
     ~SBBaseScene();
@@ -50,8 +52,9 @@ public:
     EnemyController* getEnemybyBody(b2Body* aBody);
     
     virtual void ccTouchesBegan(CCSet* touches, CCEvent* event);
+    virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
     virtual void didSwipe(CCObject * obj);
-    virtual void didTap(CCObject * obj);
+//    virtual void didTap(CCObject * obj);
     void tick(float dt);
     CREATE_FUNC(SBBaseScene);
 };
