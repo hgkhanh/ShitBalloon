@@ -26,6 +26,8 @@ bool SBBaseScene::init(){
     this->setTouchEnabled(true);
     _screenSize = CCDirector::sharedDirector()->getWinSize();
     
+    //Sprite Sheet
+    this->initSprite();
     
     //init Physics and Touch
     this->initPhysics();
@@ -77,6 +79,19 @@ void SBBaseScene::addPlatforms(const char *pszFileName){
     platformShapeDef.restitution = 0.1f;
     b2Fixture* platformFixture = platformBody->CreateFixture(&platformShapeDef);
     
+}
+
+void SBBaseScene::initSprite()
+{
+    CCSpriteFrameCache* spriteFrameCache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    
+    //  load the spritesheet file.
+    spriteFrameCache->addSpriteFramesWithFile("AnimShit.plist");
+
+    // create sprite batch node
+    CCSpriteBatchNode* spriteBatchNode = CCSpriteBatchNode::create("AnimShit.png");
+        // add _spriteBatchNode to scene
+    this->addChild(spriteBatchNode);
 }
 
 void SBBaseScene::initPhysics()
@@ -220,15 +235,34 @@ void SBBaseScene::tick(float dt)
 	_world->Step(dt, velocityIterations, positionIterations);
     
     srand ( time(NULL) );
-    
+    std::vector<b2Body *>toDestroy; // list of Char is Dead
+
     //Iterate over the bodies in the physics world
     for (b2Body* b = _world->GetBodyList(); b; b = b->GetNext())
     {
         if (b->GetUserData() != NULL) {
+
             //Synchronize the AtlasSprites position and rotation with the corresponding body
             CCSprite* curSprite = (CCSprite*)b->GetUserData();
             curSprite->setPosition( ccp( b->GetPosition().x * PTM_RATIO, b->GetPosition().y * PTM_RATIO) );
             curSprite->setRotation( -1 * CC_RADIANS_TO_DEGREES(b->GetAngle()) );
+            
+            // check dead Char
+            if (curSprite->getTag() == kHeroTag)
+            {
+                if  (_heroController->getModel()->getState() == kCharacterStateDead )
+                {
+                    toDestroy.push_back(b);
+                }
+            }
+            else if (curSprite->getTag() == kEnemyTag)
+            {
+                EnemyController* curEnemy = getEnemybyBody(b);
+                if  (curEnemy->getModel()->getState() == kCharacterStateDead )
+                {
+                    toDestroy.push_back(b);
+                }
+            }
             // air resistance
 			b2Vec2 vel = b->GetLinearVelocity();
 			float speed = vel.Normalize(); //normalizes vector and returns length
@@ -254,7 +288,6 @@ void SBBaseScene::tick(float dt)
     }
     
     // Check Contact
-    std::vector<b2Body *>toDestroy; // list of Char would be Dead after this contact
     std::vector<SBContact>::iterator pos;
     for (pos = _contactListener->_contacts.begin();
          pos!= _contactListener->_contacts.end();
@@ -273,12 +306,15 @@ void SBBaseScene::tick(float dt)
                 if  (curEnemy)
                 {
                     int hitResult = curEnemy->gotHit();
+                    _heroController->hitting();
+                    /*
                     if (hitResult == kCharacterStateDead
                         && std::find(toDestroy.begin(), toDestroy.end(), contact.fixtureB->GetBody() )
                         == toDestroy.end()) //check if Char was set to Destroy already (==last means not found)
                     {
                         toDestroy.push_back(contact.fixtureB->GetBody());
                     }
+                     */
                 }
             }
             // (B : Enemy) Hit (A:Hero)
@@ -286,26 +322,32 @@ void SBBaseScene::tick(float dt)
                      && (int)contact.fixtureB->GetUserData() == kEnemyBodyTag)
             {
                 int hitResult = _heroController->gotHit();
+                
+                /*
                 if (hitResult == kCharacterStateDead
                     && std::find(toDestroy.begin(), toDestroy.end(), contact.fixtureB->GetBody() )
                     == toDestroy.end()) //check if Char was set to Destroy already (==last means not found)
                 {
                     toDestroy.push_back(contact.fixtureA->GetBody());
                 }
+                */
             }
         }
     }
     
     // Process toDestroy
     std::vector<b2Body *>::iterator pos2;
-    for(pos2 = toDestroy.begin(); pos2 != toDestroy.end(); ++pos2) {
+    for(pos2 = toDestroy.begin(); pos2 != toDestroy.end(); ++pos2)
+    {
         b2Body *bodyToDestroy = *pos2;
-        if (bodyToDestroy->GetUserData() != NULL) {
+        if (bodyToDestroy->GetUserData() != NULL)
+        {
             CCSprite *spriteToDestroy = (CCSprite *) bodyToDestroy->GetUserData();
             this->removeChild(spriteToDestroy, true);
         }
         _world->DestroyBody(bodyToDestroy);
     }
+    
 }
 
 

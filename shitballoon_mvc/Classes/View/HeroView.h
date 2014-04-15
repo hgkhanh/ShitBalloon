@@ -30,6 +30,13 @@ public:
     ~HeroView();
     bool initWithModel(Hero* aHero, CCLayer* aLayer, b2World* aWorld);
     void initPhysics(b2World* aWorld);
+    void animateLeft();
+    void animateDown();
+    void animateUp();
+    void animateRight();
+    void animateHit();
+
+    virtual void animateDead();
     virtual void updateHPBar();
 };
 #endif /* defined(__shitballoon_mvc__HeroView__) */

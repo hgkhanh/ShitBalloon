@@ -45,6 +45,7 @@ public:
     void addHero(CCPoint p);
     void addSpawnPoint(CCPoint p, float spawnInterval, int capacity);
     
+    void initSprite();
     void initPhysics();
     void initTouch();
     virtual bool init();

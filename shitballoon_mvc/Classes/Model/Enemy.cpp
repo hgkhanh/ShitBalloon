@@ -34,7 +34,7 @@ int Enemy::takeDamage()
     else
     {
         // change state, update HP bar
-        this->setState(kCharacterStateHit);
+        this->setState(kCharacterStateGotHit);
         this->scheduleOnce(schedule_selector(Enemy::endHitState), 1.0f);
         this->getViewDelegate()->updateHPBar();
     }

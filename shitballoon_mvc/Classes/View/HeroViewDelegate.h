@@ -13,6 +13,7 @@ class HeroViewDelegate
 {
 public:
     virtual void updateHPBar() = 0;
+    virtual void animateDead() = 0;
 };
 
 #endif /* defined(__shitballoon_mvc__HeroViewDelegate__) */

@@ -28,14 +28,17 @@ int Hero::takeDamage()
     CCLayer::onEnter(); // Must call this for Schedule to work
     this->setCurrentHP(_currentHP - 1);
     if (_currentHP == 0) {
-        this->setState(kCharacterStateDead);
+        this->setState(kCharacterStateDying);
+        this->getViewDelegate()->updateHPBar();
+        this->getViewDelegate()->animateDead();
+        this->scheduleOnce(schedule_selector(Hero::endDyingState), 3.0f);
     }
     else
     {
         // change state, update HP bar
-        this->setState(kCharacterStateHit);
-        this->scheduleOnce(schedule_selector(Hero::endHitState), 1.0f);
+        this->setState(kCharacterStateGotHit);
         this->getViewDelegate()->updateHPBar();
+        this->scheduleOnce(schedule_selector(Hero::endHitState), 1.0f);
     }
     return _state;
 }
@@ -43,4 +46,9 @@ int Hero::takeDamage()
 void Hero::endHitState(float dt)
 {
     this->setState(kCharacterStateAlive);
+}
+
+void Hero::endDyingState(float dt)
+{
+    this->setState(kCharacterStateDead);
 }

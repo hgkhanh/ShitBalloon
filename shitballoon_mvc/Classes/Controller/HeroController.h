@@ -26,6 +26,7 @@ public:
     HeroController* createHeroWithPos(CCPoint aPos, CCLayer* aLayer, b2World* aWorld);
     
     int gotHit();
+    void hitting();
     
     virtual void touch();
     virtual void swipeUp();

@@ -15,7 +15,9 @@ using namespace cocos2d;
 
 typedef enum {
     kCharacterStateAlive,
-    kCharacterStateHit,
+    kCharacterStateHitting,
+    kCharacterStateGotHit,
+    kCharacterStateDying,
     kCharacterStateDead,
 } CharacterStates;
 

@@ -39,33 +39,65 @@ int HeroController::gotHit()
     return _model->getState();
 }
 
+void HeroController::hitting()
+{
+    if (_model->getState() == kCharacterStateAlive) {
+        _view->animateHit();
+    }
+}
+
 void HeroController::touch(){
-    b2Vec2 force = b2Vec2(0,400/PTM_RATIO);
-    b2Body* heroBody = this->_view->getBody();
-    heroBody->ApplyLinearImpulse(force,heroBody->GetLocalCenter());
+    if (_model->getState() != kCharacterStateDying
+        && _model->getState() != kCharacterStateDead)
+    {
+        b2Vec2 force = b2Vec2(0,400/PTM_RATIO);
+        b2Body* heroBody = this->_view->getBody();
+        heroBody->ApplyLinearImpulse(force,heroBody->GetLocalCenter());
+        _view->animateUp();
+    }
 }
 
 void HeroController::swipeUp(){
-    b2Vec2 force = b2Vec2(0,300/PTM_RATIO);
-    b2Body* heroBody = this->_view->getBody();
-    heroBody->ApplyLinearImpulse(force,heroBody->GetWorldCenter());
+    if (_model->getState() != kCharacterStateDying
+        && _model->getState() != kCharacterStateDead)
+    {
+        b2Vec2 force = b2Vec2(0,300/PTM_RATIO);
+        b2Body* heroBody = this->_view->getBody();
+        heroBody->ApplyLinearImpulse(force,heroBody->GetWorldCenter());
+        _view->animateUp();
+    }
 }
 
 void HeroController::swipeDown(){
-    b2Vec2 force = b2Vec2(0,-450/PTM_RATIO);
-    b2Body* heroBody = this->_view->getBody();
-    heroBody->ApplyLinearImpulse(force,heroBody->GetWorldCenter());
+    if (_model->getState() != kCharacterStateDying
+        && _model->getState() != kCharacterStateDead)
+    {
+        b2Vec2 force = b2Vec2(0,-450/PTM_RATIO);
+        b2Body* heroBody = this->_view->getBody();
+        heroBody->ApplyLinearImpulse(force,heroBody->GetWorldCenter());
+        _view->animateDown();
+    }
 }
 
 void HeroController::swipeLeft(){
-    b2Vec2 force = b2Vec2(-300/PTM_RATIO,0);
-    b2Body* heroBody = this->_view->getBody();
-    heroBody->ApplyLinearImpulse(force,heroBody->GetWorldCenter());
+    if (_model->getState() != kCharacterStateDying
+        && _model->getState() != kCharacterStateDead)
+    {
+        b2Vec2 force = b2Vec2(-300/PTM_RATIO,0);
+        b2Body* heroBody = this->_view->getBody();
+        heroBody->ApplyLinearImpulse(force,heroBody->GetWorldCenter());
+        _view->animateLeft();
+    }
 }
 
 void HeroController::swipeRight(){
-    b2Vec2 force = b2Vec2(300/PTM_RATIO,0);
-    b2Body* heroBody = this->_view->getBody();
-    heroBody->ApplyLinearImpulse(force,heroBody->GetWorldCenter());
+    if (_model->getState() != kCharacterStateDying
+        && _model->getState() != kCharacterStateDead)
+    {
+        b2Vec2 force = b2Vec2(300/PTM_RATIO,0);
+        b2Body* heroBody = this->_view->getBody();
+        heroBody->ApplyLinearImpulse(force,heroBody->GetWorldCenter());
+        _view->animateRight();
+    }
 }
 
