@@ -39,6 +39,12 @@ typedef enum {
 } GameSpriteTag;
 
 typedef enum {
+    kSmallPlatform = 1,
+    kMediumPlatform = 2,
+    kLargePlatform = 3,
+} PlatformType;
+
+typedef enum {
     kHitCooldown = 3,
 } GameConfig;
 #endif

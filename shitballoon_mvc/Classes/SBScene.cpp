@@ -36,7 +36,7 @@ bool SBScene::init(){
     
     // init object
     this->addBackground("background.png");
-    this->addPlatforms("platform.png");
+    this->addPlatforms("platform.png", ccp(_screenSize.width * 0.5, _screenSize.height * 0.2), kSmallPlatform);
     this->addHero(ccp(_screenSize.width * 0.5, _screenSize.height * 0.9));
     this->addSpawnPoint(ccp(_screenSize.width * 0.2, _screenSize.height * 0.5), 1.0f, 3);
     this->addSpawnPoint(ccp(_screenSize.width * 0.6, _screenSize.height * 0.7), 1.5f, 4);

@@ -54,17 +54,26 @@ void SBBaseScene::addBackground(const char *pszFileName){
     this->addChild(_btnPause);
 }
 
-void SBBaseScene::addPlatforms(const char *pszFileName){
+void SBBaseScene::addPlatforms(const char *pszFileName, CCPoint pos, int type){
     CCScale9Sprite *platform = CCScale9Sprite::create(pszFileName);
     platform->setCapInsets(CCRect(15,15,120,45));
-    platform->setContentSize(CCSize(450,45));
-    
-    platform->setPosition(ccp(_screenSize.width * 0.5, _screenSize.height * 0.5));
+    switch (type) {
+        case kSmallPlatform:
+            platform->setContentSize(CCSize(150,45));
+            break;
+        case kMediumPlatform:
+            platform->setContentSize(CCSize(300,45));
+            break;
+        case kLargePlatform:
+            platform->setContentSize(CCSize(450,45));
+            break;
+    }
+    platform->setPosition(pos);
     this->addChild(platform);
     
     b2BodyDef platformBodyDef;
     platformBodyDef.type = b2_dynamicBody;
-    platformBodyDef.position.Set(_screenSize.width/2/PTM_RATIO, _screenSize.height/2/PTM_RATIO);
+    platformBodyDef.position.Set(pos.x/PTM_RATIO, pos.y/PTM_RATIO);
     platformBodyDef.userData = platform;
     b2Body* platformBody = this->_world->CreateBody(&platformBodyDef);
     platformBody->SetGravityScale(0);
