@@ -243,8 +243,8 @@ void SBBaseScene::tick(float dt)
 	int positionIterations = 1;
 	_world->Step(dt, velocityIterations, positionIterations);
     
-    srand ( time(NULL) );
     std::vector<b2Body *>toDestroy; // list of Char is Dead
+    srand ( time(NULL) );
 
     //Iterate over the bodies in the physics world
     for (b2Body* b = _world->GetBodyList(); b; b = b->GetNext())
@@ -292,7 +292,7 @@ void SBBaseScene::tick(float dt)
             }
             //random enemy movement
             if(curSprite->getTag() == kEnemyTag){
-                if(rand() % 2 == 0 ){
+                if(rand() % 2 == 0 ){ // 50% of time , apply force
                     b->SetLinearVelocity(b2Vec2(0, 0));
                     int x = rand() % (2*MAX_FORCE) - MAX_FORCE;
                     int y = rand() % (2*MAX_FORCE) - MAX_FORCE;
@@ -302,6 +302,52 @@ void SBBaseScene::tick(float dt)
                     }
                     b2Vec2 enemyForce = b2Vec2(x/PTM_RATIO,y/PTM_RATIO);
                     b->ApplyLinearImpulse(enemyForce,b->GetPosition());
+                    
+                    if (x>0 && y >0)
+                    {
+                        if (x>y)
+                        {
+                            this->getEnemybyBody(b)->moveUp();
+                        }
+                        else
+                        {
+                            this->getEnemybyBody(b)->moveRight();
+                        }
+                    }
+                    else if (x<0 && y >0)
+                    {
+                        if (-x>y)
+                        {
+                            this->getEnemybyBody(b)->moveDown();
+                        }
+                        else
+                        {
+                            this->getEnemybyBody(b)->moveRight();
+                        }
+                    }
+                    else if (x>0 && y <0)
+                    {
+                        if (x>-y)
+                        {
+                            this->getEnemybyBody(b)->moveUp();
+                        }
+                        else
+                        {
+                            this->getEnemybyBody(b)->moveLeft();
+                        }
+                    }
+                    else if (x<0 && y <0)
+                    {
+                        if (-x>y)
+                        {
+                            this->getEnemybyBody(b)->moveDown();
+                        }
+                        else
+                        {
+                            this->getEnemybyBody(b)->moveLeft();
+                        }
+                    }
+                    
                 }
                 
             }

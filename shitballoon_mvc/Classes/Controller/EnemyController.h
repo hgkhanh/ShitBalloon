@@ -14,6 +14,7 @@
 #include "EnemyView.h"
 
 using namespace cocos2d;
+#define MAX_FORCE  150
 
 class EnemyController : public CCObject
 {
@@ -25,6 +26,12 @@ public:
     ~EnemyController();
     EnemyController* createEnemyWithPos(CCPoint aPos, CCLayer* aLayer, b2World* aWorld);
     int gotHit();
+    void hitting();
+
+    virtual void moveUp();
+    virtual void moveDown();
+    virtual void moveLeft();
+    virtual void moveRight();
 };
 
 #endif /* defined(__shitballoon_mvc__HeroController__) */

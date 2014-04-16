@@ -1,5 +1,5 @@
 //
-//  HeroView.cpp
+//  EnemyView.cpp
 //  ShitBalloon
 //
 //  Created by Khanh Hoang Nguyen on 3/25/14.
@@ -29,7 +29,12 @@ bool EnemyView::initWithModel(Enemy* anEnemy, CCLayer* aLayer, b2World* aWorld)
     anEnemy->setViewDelegate(this);
     
     // Create  sprite
-    CCSprite* enemySprite = CCSprite::create("enemy.png");
+        // sprite frame
+    CCSprite* enemySprite = CCSprite::createWithSpriteFrameName("LA_idle.png");
+        // animation
+    initAnimation();
+    enemySprite->runAction(_upAction);
+    
     enemySprite->setPosition(this->_model->getPosition());
     enemySprite->setTag(kEnemyTag);
     // Add HP Label
@@ -46,6 +51,95 @@ bool EnemyView::initWithModel(Enemy* anEnemy, CCLayer* aLayer, b2World* aWorld)
     // init Physics
     initPhysics(_world);
     return true;
+}
+
+void EnemyView::animateDown()
+{
+    _sprite->stopAllActions();
+    _sprite->runAction(_downAction);
+    CCLog("animateDown");
+}
+
+void EnemyView::animateUp()
+{
+    _sprite->stopAllActions();
+    _sprite->runAction(_upAction);
+    CCLog("animateUp");
+}
+
+void EnemyView::animateLeft()
+{
+    _sprite->stopAllActions();
+    _sprite->runAction(_moveAction);
+    _sprite->setFlipX(true);
+    CCLog("animateLeft");
+}
+
+void EnemyView::animateRight()
+{
+    _sprite->stopAllActions();
+    _sprite->runAction(_moveAction);
+    _sprite->setFlipX(false);
+    CCLog("animateRight");
+}
+
+void EnemyView::initAnimation()
+{
+    // up animation
+    CCAnimation *anim = CCAnimation::create();
+    CCSpriteFrameCache* spriteFrameCache =  CCSpriteFrameCache::sharedSpriteFrameCache();
+    
+    CCSpriteFrame *frame1 = spriteFrameCache->spriteFrameByName("LA_idle.png");
+    CCSpriteFrame *frame2 = spriteFrameCache->spriteFrameByName("LA_up_02.png");
+    anim->addSpriteFrame(frame1);
+    anim->addSpriteFrame(frame2);
+    anim->setDelayPerUnit(0.3f);
+    CCAnimate *enemyAnimate = CCAnimate::create(anim);
+    this->setUpAction(CCRepeatForever::create(enemyAnimate));
+    _upAction->retain();
+    
+    // down animation
+    anim = CCAnimation::create();
+    frame1 = spriteFrameCache->spriteFrameByName("LA_idle.png");
+    frame2 = spriteFrameCache->spriteFrameByName("LA_down_02.png");
+    anim->addSpriteFrame(frame1);
+    anim->addSpriteFrame(frame2);
+    anim->setDelayPerUnit(0.3f);
+    enemyAnimate = CCAnimate::create(anim);
+    this->setDownAction(CCRepeatForever::create(enemyAnimate));
+    _downAction->retain();
+    
+    // move animation
+    anim = CCAnimation::create();
+    frame1 = spriteFrameCache->spriteFrameByName("LA_idle.png");
+    frame2 = spriteFrameCache->spriteFrameByName("LA_move_02.png");
+    anim->addSpriteFrame(frame1);
+    anim->addSpriteFrame(frame2);
+    anim->setDelayPerUnit(0.3f);
+    enemyAnimate = CCAnimate::create(anim);
+    this->setMoveAction(CCRepeatForever::create(enemyAnimate));
+    _moveAction->retain();
+    
+    // hit animation
+    anim = CCAnimation::create();
+    frame1 = spriteFrameCache->spriteFrameByName("LA_hit_02.png");
+    anim->addSpriteFrame(frame1);
+    anim->setDelayPerUnit(0.1f);
+    CCAnimate *hitAnimate = CCAnimate::create(anim);
+    hitAnimate->setDuration(0.2f);
+    
+    anim = CCAnimation::create();
+    frame1 = spriteFrameCache->spriteFrameByName("LA_idle.png");
+    frame2 = spriteFrameCache->spriteFrameByName("LA_move_02.png");
+    anim->addSpriteFrame(frame1);
+    anim->addSpriteFrame(frame2);
+    anim->setDelayPerUnit(0.3f);
+    enemyAnimate = CCAnimate::create(anim);
+    
+    CCSequence *hitSeq = CCSequence::create(hitAnimate, enemyAnimate);
+    this->setHitAction(hitSeq);
+    _hitAction->retain();
+
 }
 
 void EnemyView::initPhysics(b2World* aWorld){
@@ -97,4 +191,33 @@ void EnemyView::updateHPBar()
     if(dynamic_cast<CCLabelTTF*>(child) != NULL){
         ((CCLabelTTF*) child)->setString(labelStr->getCString());
     }
+}
+
+void EnemyView::animateHit()
+{
+    _sprite->stopAllActions();
+    
+    _sprite->runAction(_hitAction);
+    
+    CCLog("animateHit");
+}
+
+void EnemyView::animateDead()
+{
+    _sprite->stopAllActions();
+    CCSpriteFrameCache* spriteFrameCache =  CCSpriteFrameCache::sharedSpriteFrameCache();
+    
+    CCSpriteFrame *spriteFrame = spriteFrameCache->spriteFrameByName("LA_die_02.png");
+    
+    _sprite->setDisplayFrame(spriteFrame);
+    
+    // add final blow remove collision, let sprite fall out of screen
+    for (b2Fixture* fixture = _body->GetFixtureList(); fixture; fixture = fixture->GetNext())
+    {
+        fixture->SetDensity(20.0f);
+        fixture->SetSensor(true);
+        b2Vec2 force = b2Vec2(0,300/PTM_RATIO);
+        _body->ApplyLinearImpulse(force,_body->GetWorldCenter());
+    }
+    CCLog("animateDead");
 }

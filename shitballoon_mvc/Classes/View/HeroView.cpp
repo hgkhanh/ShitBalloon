@@ -93,10 +93,8 @@ void HeroView::initAnimation()
     CCAnimation *anim = CCAnimation::create();
     CCSpriteFrameCache* spriteFrameCache =  CCSpriteFrameCache::sharedSpriteFrameCache();
     
-    CCSpriteFrame *frame1 = spriteFrameCache->spriteFrameByName("hero_idle_01.png");
-    CCSpriteFrame *frame2 = spriteFrameCache->spriteFrameByName("hero_up_02.png");
+    CCSpriteFrame *frame1 = spriteFrameCache->spriteFrameByName("hero_up_02.png");
     anim->addSpriteFrame(frame1);
-    anim->addSpriteFrame(frame2);
     anim->setDelayPerUnit(0.3f);
     CCAnimate *heroAnimate = CCAnimate::create(anim);
     this->setUpAction(CCRepeatForever::create(heroAnimate));
@@ -104,10 +102,8 @@ void HeroView::initAnimation()
     
     // down animation
     anim = CCAnimation::create();
-    frame1 = spriteFrameCache->spriteFrameByName("hero_idle_01.png");
-    frame2 = spriteFrameCache->spriteFrameByName("hero_down_02.png");
+    frame1 = spriteFrameCache->spriteFrameByName("hero_down_02.png");
     anim->addSpriteFrame(frame1);
-    anim->addSpriteFrame(frame2);
     anim->setDelayPerUnit(0.3f);
     heroAnimate = CCAnimate::create(anim);
     this->setDownAction(CCRepeatForever::create(heroAnimate));
@@ -116,7 +112,7 @@ void HeroView::initAnimation()
     // move animation
     anim = CCAnimation::create();
     frame1 = spriteFrameCache->spriteFrameByName("hero_idle_01.png");
-    frame2 = spriteFrameCache->spriteFrameByName("hero_move_02.png");
+    CCSpriteFrame *frame2 = spriteFrameCache->spriteFrameByName("hero_move_02.png");
     anim->addSpriteFrame(frame1);
     anim->addSpriteFrame(frame2);
     anim->setDelayPerUnit(0.3f);

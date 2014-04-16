@@ -1,5 +1,5 @@
 //
-//  HeroController.cpp
+//  EnemyController.cpp
 //  shitballoon_mvc
 //
 //  Created by Khanh Hoang Nguyen on 3/25/14.
@@ -37,4 +37,43 @@ int EnemyController::gotHit()
         return _model->takeDamage();
     }
     return _model->getState();
+}
+
+void EnemyController::hitting()
+{
+    if (_model->getState() == kCharacterStateAlive) {
+        _view->animateHit();
+    }
+}
+
+void EnemyController::moveUp(){
+    if (_model->getState() != kCharacterStateDying
+        && _model->getState() != kCharacterStateDead)
+    {
+        _view->animateUp();
+    }
+}
+
+void EnemyController::moveDown(){
+    if (_model->getState() != kCharacterStateDying
+        && _model->getState() != kCharacterStateDead)
+    {
+        _view->animateDown();
+    }
+}
+
+void EnemyController::moveLeft(){
+    if (_model->getState() != kCharacterStateDying
+        && _model->getState() != kCharacterStateDead)
+    {
+        _view->animateLeft();
+    }
+}
+
+void EnemyController::moveRight(){
+    if (_model->getState() != kCharacterStateDying
+        && _model->getState() != kCharacterStateDead)
+    {   
+        _view->animateRight();
+    }
 }
