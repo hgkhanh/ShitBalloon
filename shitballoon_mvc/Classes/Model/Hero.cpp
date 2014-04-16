@@ -38,12 +38,12 @@ int Hero::takeDamage()
         // change state, update HP bar
         this->setState(kCharacterStateGotHit);
         this->getViewDelegate()->updateHPBar();
-        this->scheduleOnce(schedule_selector(Hero::endHitState), 1.0f);
+        this->scheduleOnce(schedule_selector(Hero::endGotHitState), 1.0f);
     }
     return _state;
 }
 
-void Hero::endHitState(float dt)
+void Hero::endGotHitState(float dt)
 {
     this->setState(kCharacterStateAlive);
 }

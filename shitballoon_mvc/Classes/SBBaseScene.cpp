@@ -273,10 +273,23 @@ void SBBaseScene::tick(float dt)
                 }
             }
             // air resistance
-			b2Vec2 vel = b->GetLinearVelocity();
-			float speed = vel.Normalize(); //normalizes vector and returns length
-			b->ApplyForce( AIR_RESIST_SCALE * speed * speed * -vel, b->GetWorldCenter() );
+            b2Vec2 vel = b->GetLinearVelocity();
+            float speed = vel.Normalize();
+            int curCharState = 0;
+            //normalizes vector and returns length
+            if(curSprite->getTag() == kHeroTag  )
+            {
+                curCharState = _heroController->getModel()->getState();
+            }
+            else if (curSprite->getTag() == kEnemyTag)
+            {
+                curCharState =  this->getEnemybyBody(b)->getModel()->getState();
+            }
             
+            if (curCharState != kCharacterStateDying)
+            {
+                b->ApplyForce( AIR_RESIST_SCALE * speed * speed * -vel, b->GetWorldCenter() );
+            }
             //random enemy movement
             if(curSprite->getTag() == kEnemyTag){
                 if(rand() % 2 == 0 ){

@@ -25,10 +25,15 @@ private:
     CC_SYNTHESIZE(CCSprite*, _sprite, Sprite);
     CC_SYNTHESIZE(CCLayer*, _layer, Layer);
     CC_SYNTHESIZE(b2World*, _world, World);
+    CC_SYNTHESIZE(CCAction*, _downAction, DownAction);
+    CC_SYNTHESIZE(CCAction*, _upAction, UpAction);
+    CC_SYNTHESIZE(CCAction*, _moveAction, MoveAction);
+    CC_SYNTHESIZE(CCAction*, _hitAction, HitAction);
 public:
     HeroView();
     ~HeroView();
     bool initWithModel(Hero* aHero, CCLayer* aLayer, b2World* aWorld);
+    void initAnimation();
     void initPhysics(b2World* aWorld);
     void animateLeft();
     void animateDown();

@@ -25,7 +25,7 @@ private:
     CC_SYNTHESIZE(HeroViewDelegate*, _viewDelegate, ViewDelegate);
     static const int _maxHP = 1;
     
-    void endHitState(float dt);
+    void endGotHitState(float dt);
     void endDyingState(float dt);
 public:
     Hero();
