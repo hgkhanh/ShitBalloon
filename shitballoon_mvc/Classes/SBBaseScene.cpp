@@ -52,6 +52,26 @@ void SBBaseScene::addBackground(const char *pszFileName){
     _btnPause->setAnchorPoint(ccp(1, 1));
     _btnPause->setPosition(ccp(_screenSize.width, _screenSize.height));
     this->addChild(_btnPause);
+    
+    _btnReset = CCSprite::create("btn_pause_off.png");
+    _btnReset->setAnchorPoint(ccp(1, 1));
+    _btnReset->setPosition(ccp(_screenSize.width * 0.93, _screenSize.height));
+    this->addChild(_btnReset);
+    
+    CCSprite * menuItemOn;
+    CCSprite * menuItemOff;
+    menuItemOn = CCSprite::create("btn_play_on.png");
+    menuItemOff = CCSprite::create("btn_play_off.png");
+    CCMenuItemSprite * playItem = CCMenuItemSprite::create(menuItemOn, menuItemOff, this, menu_selector(SBBaseScene::resume));
+    
+    menuItemOn = CCSprite::create("btn_help_on.png");
+    menuItemOff = CCSprite::create("btn_help_off.png");
+    CCMenuItemSprite * helpItem = CCMenuItemSprite::create(menuItemOn, menuItemOff, this, menu_selector(SBBaseScene::showMenuScene));
+    _pauseMenu = CCMenu::create(playItem, helpItem, NULL);
+    _pauseMenu->alignItemsVerticallyWithPadding(10);
+    _pauseMenu->setPosition(ccp(_screenSize.width * 0.5f, _screenSize.height * 0.5f));
+    _pauseMenu->setVisible(false);
+    this->addChild(_pauseMenu, 9);
 }
 
 void SBBaseScene::addPlatforms(const char *pszFileName, CCPoint pos, int type){
@@ -86,8 +106,23 @@ void SBBaseScene::addPlatforms(const char *pszFileName, CCPoint pos, int type){
     platformShapeDef.density = 10000.0f;
     platformShapeDef.friction = 0.2f;
     platformShapeDef.restitution = 0.1f;
-    b2Fixture* platformFixture = platformBody->CreateFixture(&platformShapeDef);
-    
+    platformBody->CreateFixture(&platformShapeDef);
+}
+
+void SBBaseScene::resume() {
+    if (_running) return;
+    _running = !_running;
+    this->removeChildByTag(1000);
+    this->_pauseMenu->setVisible(false);
+    this->_btnReset->setVisible(true);
+    this->_btnPause->setVisible(true);
+}
+
+void SBBaseScene::showMenuScene() {
+    if (_running) return;
+    _running = !_running;
+    CCScene* newScene = CCTransitionFade::create(0.5f, MenuScene::scene());
+    CCDirector::sharedDirector()->replaceScene(newScene);
 }
 
 void SBBaseScene::initSprite()
@@ -176,42 +211,26 @@ void SBBaseScene::initTouch()
                         | kSwipeGestureRecognizerDirectionUp | kSwipeGestureRecognizerDirectionDown);
     swipe->setCancelsTouchesInView(true);
     this->addChild(swipe);
-    
-    
 }
 
 void SBBaseScene::ccTouchesBegan(cocos2d::CCSet* touches, cocos2d::CCEvent* event){
     CCTouch *touch = (CCTouch *)touches->anyObject();
     if (touch) {
         CCPoint tap = touch->getLocation();
-        CCRect boundary;
+        CCRect boundaryPause;
+        CCRect boundaryReset;
         //handle button touches
-        CCSprite * button;
         
-        button = _btnPause;
-        boundary = button->boundingBox();
+        boundaryPause = _btnPause->boundingBox();
+        boundaryReset = _btnReset->boundingBox();
         
-        if (!boundary.containsPoint(tap)) {
+        if (!boundaryPause.containsPoint(tap) && !boundaryReset.containsPoint(tap) && _running) {
             this->getDelegate()->touch();
         }
     }
 }
 
-void SBBaseScene::ccTouchesEnded(cocos2d::CCSet *touches, cocos2d::CCEvent *event){
-    CCTouch *touch = (CCTouch *)touches->anyObject();
-    if (touch) {
-        CCPoint tap = touch->getLocation();
-        CCRect boundary;
-        CCSprite * button;
-        
-        button = _btnPause;
-        boundary = button->boundingBox();
-        
-        if (boundary.containsPoint(tap)) {
-            _running = !_running;
-        }
-    }
-}
+
 
 void SBBaseScene::didSwipe(CCObject * obj)
 {
