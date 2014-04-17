@@ -25,12 +25,14 @@ private:
     //CC_SYNTHESIZE(CCSprite*, _sprite, Sprite);
     CC_SYNTHESIZE(EnemyViewDelegate*, _viewDelegate, ViewDelegate);
     static const int maxHP = 2;
+
+    void endGotHitState(float dt);
+    void endDyingState(float dt);
 public:
     Enemy();
     ~Enemy();
     static Enemy* initWithPos(CCPoint aPos);
     int takeDamage();
-    void endHitState(float dt);
 };
 
 #endif /* defined(__shitballoon_mvc__Enemy__) */

@@ -286,8 +286,13 @@ void SBBaseScene::tick(float dt)
                 curCharState =  this->getEnemybyBody(b)->getModel()->getState();
             }
             
-            if (curCharState != kCharacterStateDying)
-            {
+            if (curCharState == kCharacterStateDying)
+            { // make dying char fall faster
+                b2Vec2 flapForce = b2Vec2(0,-50/PTM_RATIO);
+                b->ApplyLinearImpulse(flapForce,b->GetPosition());
+            }
+            else
+            { // create balloon-like movement
                 b->ApplyForce( AIR_RESIST_SCALE * speed * speed * -vel, b->GetWorldCenter() );
             }
             //random enemy movement
@@ -373,32 +378,20 @@ void SBBaseScene::tick(float dt)
                 EnemyController* curEnemy = getEnemybyBody(contact.fixtureB->GetBody());
                 if  (curEnemy)
                 {
-                    int hitResult = curEnemy->gotHit();
+                    curEnemy->gotHit();
                     _heroController->hitting();
-                    /*
-                    if (hitResult == kCharacterStateDead
-                        && std::find(toDestroy.begin(), toDestroy.end(), contact.fixtureB->GetBody() )
-                        == toDestroy.end()) //check if Char was set to Destroy already (==last means not found)
-                    {
-                        toDestroy.push_back(contact.fixtureB->GetBody());
-                    }
-                     */
                 }
             }
             // (B : Enemy) Hit (A:Hero)
             else if ((int)contact.fixtureA->GetUserData() == kHeroBalloonTag
                      && (int)contact.fixtureB->GetUserData() == kEnemyBodyTag)
             {
-                int hitResult = _heroController->gotHit();
-                
-                /*
-                if (hitResult == kCharacterStateDead
-                    && std::find(toDestroy.begin(), toDestroy.end(), contact.fixtureB->GetBody() )
-                    == toDestroy.end()) //check if Char was set to Destroy already (==last means not found)
+                EnemyController* curEnemy = getEnemybyBody(contact.fixtureB->GetBody());
+                if  (curEnemy)
                 {
-                    toDestroy.push_back(contact.fixtureA->GetBody());
+                    _heroController->gotHit();
+                    curEnemy->hitting();
                 }
-                */
             }
         }
     }

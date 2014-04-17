@@ -124,9 +124,9 @@ void EnemyView::initAnimation()
     anim = CCAnimation::create();
     frame1 = spriteFrameCache->spriteFrameByName("LA_hit_02.png");
     anim->addSpriteFrame(frame1);
-    anim->setDelayPerUnit(0.1f);
+    anim->setDelayPerUnit(0.2f);
     CCAnimate *hitAnimate = CCAnimate::create(anim);
-    hitAnimate->setDuration(0.2f);
+    hitAnimate->setDuration(0.5f);
     
     anim = CCAnimation::create();
     frame1 = spriteFrameCache->spriteFrameByName("LA_idle.png");
@@ -214,7 +214,6 @@ void EnemyView::animateDead()
     // add final blow remove collision, let sprite fall out of screen
     for (b2Fixture* fixture = _body->GetFixtureList(); fixture; fixture = fixture->GetNext())
     {
-        fixture->SetDensity(20.0f);
         fixture->SetSensor(true);
         b2Vec2 force = b2Vec2(0,300/PTM_RATIO);
         _body->ApplyLinearImpulse(force,_body->GetWorldCenter());

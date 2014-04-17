@@ -222,7 +222,6 @@ void HeroView::animateDead()
     // add final blow remove collision, let sprite fall out of screen
     for (b2Fixture* fixture = _body->GetFixtureList(); fixture; fixture = fixture->GetNext())
     {
-        fixture->SetDensity(20.0f);
         fixture->SetSensor(true);
         b2Vec2 force = b2Vec2(0,300/PTM_RATIO);
         _body->ApplyLinearImpulse(force,_body->GetWorldCenter());

@@ -29,19 +29,27 @@ int Enemy::takeDamage()
     CCLayer::onEnter(); // Must call this for Schedule to work
     this->setCurrentHP(_currentHP - 1);
     if (_currentHP == 0) {
-        this->setState(kCharacterStateDead);
+        this->setState(kCharacterStateDying);
+        this->getViewDelegate()->updateHPBar();
+        this->getViewDelegate()->animateDead();
+        this->scheduleOnce(schedule_selector(Enemy::endDyingState), 6.0f);
     }
     else
     {
         // change state, update HP bar
         this->setState(kCharacterStateGotHit);
-        this->scheduleOnce(schedule_selector(Enemy::endHitState), 1.0f);
+        this->scheduleOnce(schedule_selector(Enemy::endGotHitState), 1.0f);
         this->getViewDelegate()->updateHPBar();
     }
     return _state;
 }
 
-void Enemy::endHitState(float dt)
+void Enemy::endGotHitState(float dt)
 {
     this->setState(kCharacterStateAlive);
+}
+
+void Enemy::endDyingState(float dt)
+{
+    this->setState(kCharacterStateDead);
 }
