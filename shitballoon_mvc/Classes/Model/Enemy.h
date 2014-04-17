@@ -22,7 +22,6 @@ private:
     CC_SYNTHESIZE(CCPoint, _posotion, Position);
     CC_SYNTHESIZE(int, _currentHP, CurrentHP);
     CC_SYNTHESIZE(CharacterStates, _state, State);
-    //CC_SYNTHESIZE(CCSprite*, _sprite, Sprite);
     CC_SYNTHESIZE(EnemyViewDelegate*, _viewDelegate, ViewDelegate);
     static const int maxHP = 2;
 
