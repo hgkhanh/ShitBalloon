@@ -314,8 +314,12 @@ void SBBaseScene::tick(float dt)
             { // create balloon-like movement
                 b->ApplyForce( AIR_RESIST_SCALE * speed * speed * -vel, b->GetWorldCenter() );
             }
+            // check hero idle
+            if (curSprite->getTag() == kHeroTag && speed < 1.0f) {
+                _heroController->getView()->animateIdle();
+            }
             //random enemy movement
-            if(curSprite->getTag() == kEnemyTag){
+            if(curSprite->getTag() == kEnemyTag && curCharState != kCharacterStateDying){
                 if(rand() % 2 == 0 ){ // 50% of time , apply force
                     b->SetLinearVelocity(b2Vec2(0, 0));
                     int x = rand() % (2*MAX_FORCE) - MAX_FORCE;
@@ -399,6 +403,19 @@ void SBBaseScene::tick(float dt)
                 {
                     curEnemy->gotHit();
                     _heroController->hitting();
+                    //balloon pop
+                    CCParticleSmoke* balloonPop = new CCParticleSmoke();
+                    balloonPop->initWithTotalParticles(10);
+                    balloonPop->setAutoRemoveOnFinish(true);
+                    balloonPop->setStartSize(50.0f);
+                    balloonPop->setEndSize(10.0f);
+                    balloonPop->setEmitterMode(kCCParticleModeGravity);
+                    balloonPop->setSpeed(100.0f);
+                    balloonPop->setAnchorPoint(ccp(0.5f,0.5f));
+                    balloonPop->setPosition(curEnemy->getView()->getSprite()->getPosition());
+                    balloonPop->setDuration(0.5f);
+                    this->addChild(balloonPop);
+                    balloonPop->release();
                 }
             }
             // (B : Enemy) Hit (A:Hero)

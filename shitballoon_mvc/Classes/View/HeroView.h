@@ -29,6 +29,7 @@ private:
     CC_SYNTHESIZE(CCAction*, _upAction, UpAction);
     CC_SYNTHESIZE(CCAction*, _moveAction, MoveAction);
     CC_SYNTHESIZE(CCAction*, _hitAction, HitAction);
+    CC_SYNTHESIZE(CCAction*, _idleAction, IdleAction);
 public:
     HeroView();
     ~HeroView();
@@ -39,6 +40,7 @@ public:
     void animateDown();
     void animateUp();
     void animateRight();
+    void animateIdle();
     void animateHit();
 
     virtual void animateDead();

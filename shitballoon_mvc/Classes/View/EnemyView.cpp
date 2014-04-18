@@ -57,14 +57,12 @@ void EnemyView::animateDown()
 {
     _sprite->stopAllActions();
     _sprite->runAction(_downAction);
-    CCLog("animateDown");
 }
 
 void EnemyView::animateUp()
 {
     _sprite->stopAllActions();
     _sprite->runAction(_upAction);
-    CCLog("animateUp");
 }
 
 void EnemyView::animateLeft()
@@ -72,7 +70,6 @@ void EnemyView::animateLeft()
     _sprite->stopAllActions();
     _sprite->runAction(_moveAction);
     _sprite->setFlipX(true);
-    CCLog("animateLeft");
 }
 
 void EnemyView::animateRight()
@@ -80,7 +77,6 @@ void EnemyView::animateRight()
     _sprite->stopAllActions();
     _sprite->runAction(_moveAction);
     _sprite->setFlipX(false);
-    CCLog("animateRight");
 }
 
 void EnemyView::initAnimation()
@@ -198,8 +194,6 @@ void EnemyView::animateHit()
     _sprite->stopAllActions();
     
     _sprite->runAction(_hitAction);
-    
-    CCLog("animateHit");
 }
 
 void EnemyView::animateDead()
@@ -207,16 +201,17 @@ void EnemyView::animateDead()
     _sprite->stopAllActions();
     CCSpriteFrameCache* spriteFrameCache =  CCSpriteFrameCache::sharedSpriteFrameCache();
     
+
+    // change sprite
     CCSpriteFrame *spriteFrame = spriteFrameCache->spriteFrameByName("LA_die_02.png");
-    
     _sprite->setDisplayFrame(spriteFrame);
     
     // add final blow remove collision, let sprite fall out of screen
     for (b2Fixture* fixture = _body->GetFixtureList(); fixture; fixture = fixture->GetNext())
     {
         fixture->SetSensor(true);
-        b2Vec2 force = b2Vec2(0,300/PTM_RATIO);
-        _body->ApplyLinearImpulse(force,_body->GetWorldCenter());
     }
+    b2Vec2 force = b2Vec2(0,1000/PTM_RATIO);
+    _body->ApplyLinearImpulse(force,_body->GetWorldCenter());
     CCLog("animateDead");
 }

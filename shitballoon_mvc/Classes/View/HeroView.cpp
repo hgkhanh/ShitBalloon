@@ -53,19 +53,22 @@ bool HeroView::initWithModel(Hero* aHero, CCLayer* aLayer, b2World* aWorld)
     return true;
 }
 
+void HeroView::animateIdle()
+{
+    _sprite->stopAllActions();
+    _sprite->runAction(_idleAction);
+}
+
 void HeroView::animateDown()
 {
     _sprite->stopAllActions();
     _sprite->runAction(_downAction);
-    CCLog("animateDown");
-
 }
 
 void HeroView::animateUp()
 {
     _sprite->stopAllActions();
     _sprite->runAction(_upAction);
-    CCLog("animateUp");
 }
 
 void HeroView::animateLeft()
@@ -73,8 +76,6 @@ void HeroView::animateLeft()
     _sprite->stopAllActions();
     _sprite->runAction(_moveAction);
     _sprite->setFlipX(true);
-    CCLog("animateLeft");
-
 }
 
 void HeroView::animateRight()
@@ -83,8 +84,6 @@ void HeroView::animateRight()
    
     _sprite->runAction(_moveAction);
     _sprite->setFlipX(false);
-    CCLog("animateRight");
-
 }
 
 void HeroView::initAnimation()
@@ -94,7 +93,9 @@ void HeroView::initAnimation()
     CCSpriteFrameCache* spriteFrameCache =  CCSpriteFrameCache::sharedSpriteFrameCache();
     
     CCSpriteFrame *frame1 = spriteFrameCache->spriteFrameByName("hero_up_02.png");
+    CCSpriteFrame *frame2 = spriteFrameCache->spriteFrameByName("hero_idle_01.png");
     anim->addSpriteFrame(frame1);
+    anim->addSpriteFrame(frame2);
     anim->setDelayPerUnit(0.3f);
     CCAnimate *heroAnimate = CCAnimate::create(anim);
     this->setUpAction(CCRepeatForever::create(heroAnimate));
@@ -103,6 +104,7 @@ void HeroView::initAnimation()
     // down animation
     anim = CCAnimation::create();
     frame1 = spriteFrameCache->spriteFrameByName("hero_down_02.png");
+    frame2 = spriteFrameCache->spriteFrameByName("hero_idle_01.png");
     anim->addSpriteFrame(frame1);
     anim->setDelayPerUnit(0.3f);
     heroAnimate = CCAnimate::create(anim);
@@ -112,7 +114,7 @@ void HeroView::initAnimation()
     // move animation
     anim = CCAnimation::create();
     frame1 = spriteFrameCache->spriteFrameByName("hero_idle_01.png");
-    CCSpriteFrame *frame2 = spriteFrameCache->spriteFrameByName("hero_move_02.png");
+    frame2 = spriteFrameCache->spriteFrameByName("hero_move_02.png");
     anim->addSpriteFrame(frame1);
     anim->addSpriteFrame(frame2);
     anim->setDelayPerUnit(0.3f);
@@ -139,6 +141,15 @@ void HeroView::initAnimation()
     CCSequence *hitSeq = CCSequence::create(hitAnimate, heroAnimate);
     this->setHitAction(hitSeq);
     _hitAction->retain();
+    
+    // idle animation
+    anim = CCAnimation::create();
+    frame1 = spriteFrameCache->spriteFrameByName("hero_idle_01.png");
+    anim->addSpriteFrame(frame1);
+    anim->setDelayPerUnit(0.3f);
+    heroAnimate = CCAnimate::create(anim);
+    this->setIdleAction(CCRepeatForever::create(heroAnimate));
+    _idleAction->retain();
 
 }
 
@@ -206,8 +217,6 @@ void HeroView::animateHit()
     _sprite->stopAllActions();
     
     _sprite->runAction(_hitAction);
-    
-    CCLog("animateHit");
 }
 
 void HeroView::animateDead()
@@ -223,8 +232,8 @@ void HeroView::animateDead()
     for (b2Fixture* fixture = _body->GetFixtureList(); fixture; fixture = fixture->GetNext())
     {
         fixture->SetSensor(true);
-        b2Vec2 force = b2Vec2(0,300/PTM_RATIO);
-        _body->ApplyLinearImpulse(force,_body->GetWorldCenter());
     }
+    b2Vec2 force = b2Vec2(0,300/PTM_RATIO);
+    _body->ApplyLinearImpulse(force,_body->GetWorldCenter());
     CCLog("animateDead");
 }
