@@ -46,7 +46,7 @@ public:
     SBBaseScene();
     ~SBBaseScene();
     void addBackground(const char *pszFileName);
-    void addPlatforms(const char *pszFileName, CCPoint pos, int type);
+    void addPlatforms(char *Filename, CCPoint pos, int type);
     void addHero(CCPoint p);
     void addSpawnPoint(CCPoint p, float spawnInterval, int capacity);
     

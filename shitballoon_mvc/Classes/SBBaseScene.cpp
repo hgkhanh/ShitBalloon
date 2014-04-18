@@ -45,7 +45,6 @@ bool SBBaseScene::init(){
 void SBBaseScene::addBackground(const char *pszFileName){
     CCSprite *background = CCSprite::create(pszFileName);
     background->setPosition(ccp( _screenSize.width * 0.5, _screenSize.height * 0.5));
-    background->setOpacity(150);
     this->addChild(background);
     
     _btnPause = CCSprite::create("btn_pause_off.png");
@@ -74,20 +73,24 @@ void SBBaseScene::addBackground(const char *pszFileName){
     this->addChild(_pauseMenu, 9);
 }
 
-void SBBaseScene::addPlatforms(const char *pszFileName, CCPoint pos, int type){
-    CCScale9Sprite *platform = CCScale9Sprite::create(pszFileName);
-    platform->setCapInsets(CCRect(15,15,120,45));
+void SBBaseScene::addPlatforms(char *fileName, CCPoint pos, int type){
+    char * newChar = new char[strlen(fileName) + 12];
+    strcpy(newChar, fileName);
     switch (type) {
         case kSmallPlatform:
-            platform->setContentSize(CCSize(150,45));
+            strcat(newChar, "_short.gif");
             break;
         case kMediumPlatform:
-            platform->setContentSize(CCSize(300,45));
+            strcat(newChar, "_medium.png");
             break;
         case kLargePlatform:
-            platform->setContentSize(CCSize(450,45));
+            strcat(newChar, "_long.gif");
+            break;
+        default:
             break;
     }
+    CCSprite *platform = CCSprite::create(newChar);
+
     platform->setPosition(pos);
     this->addChild(platform);
     
@@ -122,6 +125,8 @@ void SBBaseScene::showMenuScene() {
     if (_running) return;
     _running = !_running;
     CCScene* newScene = CCTransitionFade::create(0.5f, MenuScene::scene());
+    MenuScene* newLayer= (MenuScene*) newScene;
+    newLayer->retain();
     CCDirector::sharedDirector()->replaceScene(newScene);
 }
 
