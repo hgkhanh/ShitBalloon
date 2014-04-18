@@ -56,6 +56,7 @@ public:
     virtual bool init();
     void resume();
     void showMenuScene();
+    void showHitParticles(CCPoint aPos);
     
     EnemyController* getEnemybyBody(b2Body* aBody);
     

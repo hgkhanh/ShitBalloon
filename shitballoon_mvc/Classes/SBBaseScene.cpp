@@ -403,19 +403,7 @@ void SBBaseScene::tick(float dt)
                 {
                     curEnemy->gotHit();
                     _heroController->hitting();
-                    //balloon pop
-                    CCParticleSmoke* balloonPop = new CCParticleSmoke();
-                    balloonPop->initWithTotalParticles(10);
-                    balloonPop->setAutoRemoveOnFinish(true);
-                    balloonPop->setStartSize(50.0f);
-                    balloonPop->setEndSize(10.0f);
-                    balloonPop->setEmitterMode(kCCParticleModeGravity);
-                    balloonPop->setSpeed(100.0f);
-                    balloonPop->setAnchorPoint(ccp(0.5f,0.5f));
-                    balloonPop->setPosition(curEnemy->getView()->getSprite()->getPosition());
-                    balloonPop->setDuration(0.5f);
-                    this->addChild(balloonPop);
-                    balloonPop->release();
+                    this->showHitParticles(curEnemy->getView()->getSprite()->getPosition());
                 }
             }
             // (B : Enemy) Hit (A:Hero)
@@ -464,4 +452,21 @@ EnemyController* SBBaseScene::getEnemybyBody(b2Body *aBody)
         }
     }
     return NULL;
+}
+
+void SBBaseScene::showHitParticles(CCPoint aPos)
+{
+    //balloon pop
+    CCParticleSmoke* balloonPop = new CCParticleSmoke();
+    balloonPop->initWithTotalParticles(10);
+    balloonPop->setAutoRemoveOnFinish(true);
+    balloonPop->setStartSize(50.0f);
+    balloonPop->setEndSize(10.0f);
+    balloonPop->setEmitterMode(kCCParticleModeGravity);
+    balloonPop->setSpeed(100.0f);
+    balloonPop->setAnchorPoint(ccp(0.5f,0.5f));
+    balloonPop->setPosition(aPos);
+    balloonPop->setDuration(0.5f);
+    this->addChild(balloonPop);
+    balloonPop->release();
 }
