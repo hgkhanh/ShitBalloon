@@ -23,6 +23,7 @@ public:
     ~SBScene();
     static CCScene* scene();
     virtual bool init();
+    virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
     CREATE_FUNC(SBScene);
 };
 

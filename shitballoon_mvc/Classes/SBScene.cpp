@@ -28,6 +28,11 @@ CCScene* SBScene::scene()
     return scene;
 }
 
+void reset(){
+    CCScene* newScene = CCTransitionFade::create(0.5f, SBScene::scene());
+    CCDirector::sharedDirector()->replaceScene(newScene);
+}
+
 bool SBScene::init(){
     if ( !SBBaseScene::init() )
     {
@@ -50,4 +55,47 @@ bool SBScene::init(){
     this->schedule(schedule_selector(SBBaseScene::tick));
     
     return true;
+}
+
+void SBScene::ccTouchesEnded(cocos2d::CCSet *touches, cocos2d::CCEvent *event){
+    CCTouch *touch = (CCTouch *)touches->anyObject();
+    if (touch) {
+        CCPoint tap = touch->getLocation();
+        CCRect boundaryPause;
+        CCRect boundaryReset;
+        
+        boundaryPause = _btnPause->boundingBox();
+        boundaryReset = _btnReset->boundingBox();
+        
+        if (boundaryPause.containsPoint(tap)) {
+            if (_running) {
+                _pauseLayer = PauseLayer::create(ccc4(150, 150, 150, 125), _screenSize.width, _screenSize.height, _screenSize);
+                _pauseLayer->setPosition(CCPointZero);
+                _pauseLayer->setTag(1000);
+                this->addChild(_pauseLayer, 8);
+                CCObject* child;
+                CCARRAY_FOREACH(this->getChildren(), child) {
+                    ((CCSprite*) child)->pauseSchedulerAndActions();
+                }
+                this->_pauseMenu->setVisible(true);
+                this->_btnPause->setVisible(false);
+                this->_btnReset->setVisible(false);
+            } else {
+                this->removeChildByTag(1000);
+                CCObject* child;
+                CCARRAY_FOREACH(this->getChildren(), child) {
+                    ((CCSprite*) child)->resumeSchedulerAndActions();
+                }
+            }
+            _running = !_running;
+        } else if (boundaryReset.containsPoint(tap)) {
+            if (_running) {
+                _running = !_running;
+                CCScene* newScene = CCTransitionFade::create(0.5f, SBScene::scene());
+                SBScene* newLayer= (SBScene*) newScene;
+                newLayer->retain();
+                CCDirector::sharedDirector()->replaceScene(newScene);
+            }
+        }
+    }
 }

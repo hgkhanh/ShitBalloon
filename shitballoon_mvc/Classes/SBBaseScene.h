@@ -18,6 +18,8 @@
 #include "SpawnPointController.h"
 #include "SBContactListener.h"
 #include "Enemy.h"
+#include "PauseLayer.h"
+#include "MenuScene.h"
 
 #define PTM_RATIO 32.0
 #define AIR_RESIST_SCALE 0.2
@@ -31,12 +33,15 @@ private:
     CC_SYNTHESIZE(CCArray*, _spawnPointControllerArray, SpawnPointControllerArray);
     CC_SYNTHESIZE(HeroControllerDelegate*, _delegate, Delegate);
     CC_SYNTHESIZE(b2World*, _world, World);
+    CC_SYNTHESIZE(PauseLayer*, _pauseLayer, PauseLayer);
     SBContactListener* _contactListener;
     CCSize _screenSize;
     CCArray* _platformArray;
     b2Body* _groundBody;
     bool _running;
     CCSprite* _btnPause;
+    CCSprite* _btnReset;
+    CCMenu* _pauseMenu;
 public:
     SBBaseScene();
     ~SBBaseScene();
@@ -49,11 +54,12 @@ public:
     void initPhysics();
     void initTouch();
     virtual bool init();
+    void resume();
+    void showMenuScene();
     
     EnemyController* getEnemybyBody(b2Body* aBody);
     
     virtual void ccTouchesBegan(CCSet* touches, CCEvent* event);
-    virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
     virtual void didSwipe(CCObject * obj);
 //    virtual void didTap(CCObject * obj);
     void tick(float dt);
