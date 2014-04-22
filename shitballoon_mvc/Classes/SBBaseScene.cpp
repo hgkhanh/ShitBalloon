@@ -330,7 +330,7 @@ void SBBaseScene::tick(float dt)
                     int x = rand() % (2*MAX_FORCE) - MAX_FORCE;
                     int y = rand() % (2*MAX_FORCE) - MAX_FORCE;
                     if(y>0){
-                        b2Vec2 flapForce = b2Vec2(0,150/PTM_RATIO);
+                        b2Vec2 flapForce = b2Vec2(0,350/PTM_RATIO);
                         b->ApplyLinearImpulse(flapForce,b->GetPosition());
                     }
                     b2Vec2 enemyForce = b2Vec2(x/PTM_RATIO,y/PTM_RATIO);
@@ -404,11 +404,14 @@ void SBBaseScene::tick(float dt)
                 && (int)contact.fixtureB->GetUserData() == kEnemyBalloonTag)
             {
                 EnemyController* curEnemy = getEnemybyBody(contact.fixtureB->GetBody());
-                if  (curEnemy)
+                if  (curEnemy && curEnemy->getModel()->getState() != kCharacterStateDying)
                 {
-                    curEnemy->gotHit();
+                    int result = curEnemy->gotHit();
+                    if (result == kCharacterStateDying) {
+                        CCPoint popPos = ccp(curEnemy->getView()->getSprite()->getPosition().x,curEnemy->getView()->getSprite()->getPosition().y + curEnemy->getView()->getSprite()->getContentSize().height*0.25);
+                        this->showPopBalloon(kEnemyTag,popPos);
+                    }
                     _heroController->hitting();
-                    this->showHitParticles(curEnemy->getView()->getSprite()->getPosition());
                 }
             }
             // (B : Enemy) Hit (A:Hero)
@@ -416,9 +419,13 @@ void SBBaseScene::tick(float dt)
                      && (int)contact.fixtureB->GetUserData() == kEnemyBodyTag)
             {
                 EnemyController* curEnemy = getEnemybyBody(contact.fixtureB->GetBody());
-                if  (curEnemy)
+                if  (curEnemy && curEnemy->getModel()->getState() != kCharacterStateDying)
                 {
-                    _heroController->gotHit();
+                    int result = _heroController->gotHit();
+                    if (result == kCharacterStateDying) {
+                        CCPoint popPos = ccp(_heroController->getView()->getSprite()->getPosition().x,_heroController->getView()->getSprite()->getPosition().y + _heroController->getView()->getSprite()->getContentSize().height*0.25);
+                        this->showPopBalloon(kHeroTag,popPos);
+                    }
                     curEnemy->hitting();
                 }
             }
@@ -459,19 +466,52 @@ EnemyController* SBBaseScene::getEnemybyBody(b2Body *aBody)
     return NULL;
 }
 
-void SBBaseScene::showHitParticles(CCPoint aPos)
+void SBBaseScene::showPopBalloon(int charTag, CCPoint aPos)
 {
     //balloon pop
+        //particles
     CCParticleSmoke* balloonPop = new CCParticleSmoke();
     balloonPop->initWithTotalParticles(10);
     balloonPop->setAutoRemoveOnFinish(true);
     balloonPop->setStartSize(50.0f);
-    balloonPop->setEndSize(10.0f);
+    balloonPop->setEndSize(1.0f);
     balloonPop->setEmitterMode(kCCParticleModeGravity);
     balloonPop->setSpeed(100.0f);
     balloonPop->setAnchorPoint(ccp(0.5f,0.5f));
     balloonPop->setPosition(aPos);
-    balloonPop->setDuration(0.5f);
+    balloonPop->setDuration(0.3f);
     this->addChild(balloonPop);
     balloonPop->release();
+        // animation
+    // up animation
+    CCAnimation *anim = CCAnimation::create();
+    CCSpriteFrameCache* spriteFrameCache =  CCSpriteFrameCache::sharedSpriteFrameCache();
+    CCSpriteFrame *frame1 = spriteFrameCache->spriteFrameByName("balloon_02.png");
+    CCSpriteFrame *frame2 = spriteFrameCache->spriteFrameByName("balloon_03.png");
+    if (charTag == kEnemyTag) {
+        frame1 = spriteFrameCache->spriteFrameByName("red_balloon_02.png");
+        frame2 = spriteFrameCache->spriteFrameByName("red_balloon_03.png");
+    }
+    anim->addSpriteFrame(frame1);
+    anim->addSpriteFrame(frame2);
+    anim->setDelayPerUnit(0.1f);
+    
+    CCAnimate *balloonAnimate = CCAnimate::create(anim);
+    balloonAnimate->setDuration(0.5f);
+    
+    CCCallFuncND *actionMoveDone = CCCallFuncND::create(this, callfuncND_selector(SBBaseScene::spriteMoveFinished), (CCObject *) this );
+    CCSequence *popSequence = CCSequence::create(balloonAnimate,actionMoveDone);
+    
+    CCSprite* balloonSprite = CCSprite::create();
+    balloonSprite->setPosition(aPos);
+    this->addChild(balloonSprite);
+    balloonSprite->runAction(popSequence);
+    CCLog("ANimate POP");
+}
+
+void SBBaseScene::spriteMoveFinished(CCObject *sender)
+{
+    CCSprite *sprite = (CCSprite *)sender;
+    sprite->stopAllActions();
+    sprite->removeFromParent();
 }

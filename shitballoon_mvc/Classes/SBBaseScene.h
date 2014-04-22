@@ -56,8 +56,8 @@ public:
     virtual bool init();
     void resume();
     void showMenuScene();
-    void showHitParticles(CCPoint aPos);
-    
+    void showPopBalloon(int charTag,CCPoint aPos);
+    void spriteMoveFinished(CCObject *sender);
     EnemyController* getEnemybyBody(b2Body* aBody);
     
     virtual void ccTouchesBegan(CCSet* touches, CCEvent* event);

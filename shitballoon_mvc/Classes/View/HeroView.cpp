@@ -233,7 +233,7 @@ void HeroView::animateDead()
     {
         fixture->SetSensor(true);
     }
-    b2Vec2 force = b2Vec2(0,300/PTM_RATIO);
+    b2Vec2 force = b2Vec2(0,1000/PTM_RATIO);
     _body->ApplyLinearImpulse(force,_body->GetWorldCenter());
     CCLog("animateDead");
 }
