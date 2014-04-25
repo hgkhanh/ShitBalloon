@@ -25,6 +25,7 @@ bool SBBaseScene::init(){
     }
     this->setTouchEnabled(true);
     _screenSize = CCDirector::sharedDirector()->getWinSize();
+    this->setEnemyCount(0);
     
     //Sprite Sheet
     this->initSprite();
@@ -34,6 +35,7 @@ bool SBBaseScene::init(){
     this->initTouch();
     
     _running = true;
+    _isHeroDie = false;
     
     // Create Contact Listener
     _contactListener = new SBContactListener();
@@ -47,14 +49,14 @@ void SBBaseScene::addBackground(const char *pszFileName){
     background->setPosition(ccp( _screenSize.width * 0.5, _screenSize.height * 0.5));
     this->addChild(background);
     
-    _btnPause = CCSprite::create("btn_pause_off.png");
+    _btnPause = CCSprite::create("pause_button.png");
     _btnPause->setAnchorPoint(ccp(1, 1));
     _btnPause->setPosition(ccp(_screenSize.width, _screenSize.height));
     this->addChild(_btnPause);
     
-    _btnReset = CCSprite::create("btn_pause_off.png");
+    _btnReset = CCSprite::create("pause_button.png");
     _btnReset->setAnchorPoint(ccp(1, 1));
-    _btnReset->setPosition(ccp(_screenSize.width * 0.93, _screenSize.height));
+    _btnReset->setPosition(ccp(_screenSize.width - _btnPause->getContentSize().width, _screenSize.height));
     this->addChild(_btnReset);
     
     CCSprite * menuItemOn;
@@ -232,6 +234,15 @@ void SBBaseScene::ccTouchesBegan(cocos2d::CCSet* touches, cocos2d::CCEvent* even
         if (!boundaryPause.containsPoint(tap) && !boundaryReset.containsPoint(tap) && _running) {
             this->getDelegate()->touch();
         }
+        if (boundaryPause.containsPoint(tap) && _running) {
+            CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addImage("pause_button_active.png");
+            _btnPause->setTexture(tex);
+        }
+        if (boundaryReset.containsPoint(tap) && _running) {
+            CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addImage("pause_button_active.png");
+            _btnPause->setTexture(tex);
+        }
+
     }
 }
 
@@ -410,6 +421,7 @@ void SBBaseScene::tick(float dt)
                     if (result == kCharacterStateDying) {
                         CCPoint popPos = ccp(curEnemy->getView()->getSprite()->getPosition().x,curEnemy->getView()->getSprite()->getPosition().y + curEnemy->getView()->getSprite()->getContentSize().height*0.25);
                         this->showPopBalloon(kEnemyTag,popPos);
+                        this->setEnemyCount(this->getEnemyCount() - 1);
                     }
                     _heroController->hitting();
                 }
@@ -425,6 +437,7 @@ void SBBaseScene::tick(float dt)
                     if (result == kCharacterStateDying) {
                         CCPoint popPos = ccp(_heroController->getView()->getSprite()->getPosition().x,_heroController->getView()->getSprite()->getPosition().y + _heroController->getView()->getSprite()->getContentSize().height*0.25);
                         this->showPopBalloon(kHeroTag,popPos);
+                        _isHeroDie = true;
                     }
                     curEnemy->hitting();
                 }

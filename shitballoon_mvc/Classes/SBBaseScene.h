@@ -19,6 +19,7 @@
 #include "SBContactListener.h"
 #include "Enemy.h"
 #include "PauseLayer.h"
+#include "GameOverLayer.h"
 #include "MenuScene.h"
 
 #define PTM_RATIO 32.0
@@ -34,14 +35,18 @@ private:
     CC_SYNTHESIZE(HeroControllerDelegate*, _delegate, Delegate);
     CC_SYNTHESIZE(b2World*, _world, World);
     CC_SYNTHESIZE(PauseLayer*, _pauseLayer, PauseLayer);
+    CC_SYNTHESIZE(GameOverLayer*, _gameOverLayer, GameOverLayer);
+    CC_SYNTHESIZE(int, _enemyCount, EnemyCount);
     SBContactListener* _contactListener;
     CCSize _screenSize;
     CCArray* _platformArray;
     b2Body* _groundBody;
     bool _running;
+    bool _isHeroDie;
     CCSprite* _btnPause;
     CCSprite* _btnReset;
     CCMenu* _pauseMenu;
+    CCMenu* _gameOverMenu;
 public:
     SBBaseScene();
     ~SBBaseScene();
@@ -62,7 +67,6 @@ public:
     
     virtual void ccTouchesBegan(CCSet* touches, CCEvent* event);
     virtual void didSwipe(CCObject * obj);
-//    virtual void didTap(CCObject * obj);
     void tick(float dt);
     CREATE_FUNC(SBBaseScene);
 };

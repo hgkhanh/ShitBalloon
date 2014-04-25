@@ -46,15 +46,41 @@ bool SBScene::init(){
     this->addSpawnPoint(ccp(_screenSize.width * 0.2, _screenSize.height * 0.5), 1.0f, 3);
     this->addSpawnPoint(ccp(_screenSize.width * 0.6, _screenSize.height * 0.7), 1.5f, 4);
     
+    this->setEnemyCount(7);
+    
+    CCSprite * menuItemOn;
+    CCSprite * menuItemOff;
+    
+    menuItemOn = CCSprite::create("btn_play_on.png");
+    menuItemOff = CCSprite::create("btn_play_off.png");
+    CCMenuItemSprite * replayItem = CCMenuItemSprite::create(menuItemOn, menuItemOff, this, menu_selector(SBScene::reset));
+    
+    menuItemOn = CCSprite::create("btn_help_on.png");
+    menuItemOff = CCSprite::create("btn_help_off.png");
+    CCMenuItemSprite * quitItem = CCMenuItemSprite::create(menuItemOn, menuItemOff, this, menu_selector(SBBaseScene::showMenuScene));
+    _gameOverMenu = CCMenu::create(replayItem, quitItem, NULL);
+    _gameOverMenu->alignItemsVerticallyWithPadding(10);
+    _gameOverMenu->setPosition(ccp(_screenSize.width * 0.5f, _screenSize.height * 0.5f));
+    _gameOverMenu->setVisible(false);
+    this->addChild(_gameOverMenu, 9);
+    
     CCObject* curSPController;
     CCARRAY_FOREACH(this->_spawnPointControllerArray, curSPController)
     {
         ((SpawnPointController*) curSPController)->startSpawn();
     }
     
-    this->schedule(schedule_selector(SBBaseScene::tick));
+    this->schedule(schedule_selector(SBScene::tick));
     
     return true;
+}
+
+void SBScene::reset(){
+    _running = !_running;
+    CCScene* newScene = CCTransitionFade::create(0.1f, SBScene::scene());
+    SBScene* newLayer= (SBScene*) newScene;
+    newLayer->retain();
+    CCDirector::sharedDirector()->replaceScene(newScene);
 }
 
 void SBScene::ccTouchesEnded(cocos2d::CCSet *touches, cocos2d::CCEvent *event){
@@ -77,19 +103,17 @@ void SBScene::ccTouchesEnded(cocos2d::CCSet *touches, cocos2d::CCEvent *event){
                 CCARRAY_FOREACH(this->getChildren(), child) {
                     ((CCSprite*) child)->pauseSchedulerAndActions();
                 }
+                CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addImage("pause_button.png");
+                this->_btnPause->setTexture(tex);
                 this->_pauseMenu->setVisible(true);
                 this->_btnPause->setVisible(false);
                 this->_btnReset->setVisible(false);
-            } else {
-                this->removeChildByTag(1000);
-                CCObject* child;
-                CCARRAY_FOREACH(this->getChildren(), child) {
-                    ((CCSprite*) child)->resumeSchedulerAndActions();
-                }
+                _running = !_running;
             }
-            _running = !_running;
         } else if (boundaryReset.containsPoint(tap)) {
             if (_running) {
+                CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addImage("pause_button_active.png");
+                this->_btnReset->setTexture(tex);
                 _running = !_running;
                 CCScene* newScene = CCTransitionFade::create(0.5f, SBScene::scene());
                 SBScene* newLayer= (SBScene*) newScene;
@@ -97,5 +121,25 @@ void SBScene::ccTouchesEnded(cocos2d::CCSet *touches, cocos2d::CCEvent *event){
                 CCDirector::sharedDirector()->replaceScene(newScene);
             }
         }
+    }
+}
+
+void SBScene::tick(float dt) {
+    SBBaseScene::tick(dt);
+    if (this->getEnemyCount() == 0 && _running) {
+        _running = !_running;
+        _gameOverLayer = GameOverLayer::create(ccc4(150, 150, 150, 125), _screenSize.width, _screenSize.height, _screenSize);
+        _gameOverLayer->setPosition(CCPointZero);
+        _gameOverLayer->setTag(2000);
+        this->addChild(_gameOverLayer, 8);
+        this->_gameOverMenu->setVisible(true);
+    }
+    if (_isHeroDie) {
+        _running = !_running;
+        _gameOverLayer = GameOverLayer::create(ccc4(150, 150, 150, 125), _screenSize.width, _screenSize.height, _screenSize);
+        _gameOverLayer->setPosition(CCPointZero);
+        _gameOverLayer->setTag(2000);
+        this->addChild(_gameOverLayer, 8);
+        this->_gameOverMenu->setVisible(true);
     }
 }

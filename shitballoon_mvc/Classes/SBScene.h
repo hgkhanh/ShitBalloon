@@ -24,6 +24,8 @@ public:
     static CCScene* scene();
     virtual bool init();
     virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
+    void tick(float dt);
+    void reset();
     CREATE_FUNC(SBScene);
 };
 
