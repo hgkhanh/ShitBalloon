@@ -134,7 +134,7 @@ void SBScene::tick(float dt) {
         this->addChild(_gameOverLayer, 8);
         this->_gameOverMenu->setVisible(true);
     }
-    if (_isHeroDie) {
+    if (_isHeroDie && _running) {
         _running = !_running;
         _gameOverLayer = GameOverLayer::create(ccc4(150, 150, 150, 125), _screenSize.width, _screenSize.height, _screenSize);
         _gameOverLayer->setPosition(CCPointZero);
