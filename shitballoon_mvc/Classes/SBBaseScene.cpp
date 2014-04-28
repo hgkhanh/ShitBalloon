@@ -296,6 +296,7 @@ void SBBaseScene::tick(float dt)
             {
                 if  (_heroController->getModel()->getState() == kCharacterStateDead )
                 {
+                    setHeroDie();
                     toDestroy.push_back(b);
                 }
             }
@@ -415,7 +416,7 @@ void SBBaseScene::tick(float dt)
                 && (int)contact.fixtureB->GetUserData() == kEnemyBalloonTag)
             {
                 EnemyController* curEnemy = getEnemybyBody(contact.fixtureB->GetBody());
-                if  (curEnemy && curEnemy->getModel()->getState() != kCharacterStateDying)
+                if  (curEnemy && curEnemy->getModel()->getState() == kCharacterStateAlive && _heroController->getModel()->getState() == kCharacterStateAlive)
                 {
                     int result = curEnemy->gotHit();
                     if (result == kCharacterStateDying) {
@@ -431,13 +432,12 @@ void SBBaseScene::tick(float dt)
                      && (int)contact.fixtureB->GetUserData() == kEnemyBodyTag)
             {
                 EnemyController* curEnemy = getEnemybyBody(contact.fixtureB->GetBody());
-                if  (curEnemy && curEnemy->getModel()->getState() != kCharacterStateDying)
+                if  (curEnemy && curEnemy->getModel()->getState() == kCharacterStateAlive && _heroController->getModel()->getState() == kCharacterStateAlive)
                 {
                     int result = _heroController->gotHit();
                     if (result == kCharacterStateDying) {
                         CCPoint popPos = ccp(_heroController->getView()->getSprite()->getPosition().x,_heroController->getView()->getSprite()->getPosition().y + _heroController->getView()->getSprite()->getContentSize().height*0.25);
                         this->showPopBalloon(kHeroTag,popPos);
-                        this->scheduleOnce(schedule_selector(SBBaseScene::setHeroDie), 3.0f);
                     }
                     curEnemy->hitting();
                 }

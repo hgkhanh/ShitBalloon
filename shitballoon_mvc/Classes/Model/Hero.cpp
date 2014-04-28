@@ -31,7 +31,7 @@ int Hero::takeDamage()
         this->setState(kCharacterStateDying);
         this->getViewDelegate()->updateHPBar();
         this->getViewDelegate()->animateDead();
-        this->scheduleOnce(schedule_selector(Hero::endDyingState), 6.0f);
+        this->scheduleOnce(schedule_selector(Hero::endDyingState), 3.0f);
     }
     else
     {
