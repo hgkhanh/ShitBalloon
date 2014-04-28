@@ -437,7 +437,7 @@ void SBBaseScene::tick(float dt)
                     if (result == kCharacterStateDying) {
                         CCPoint popPos = ccp(_heroController->getView()->getSprite()->getPosition().x,_heroController->getView()->getSprite()->getPosition().y + _heroController->getView()->getSprite()->getContentSize().height*0.25);
                         this->showPopBalloon(kHeroTag,popPos);
-                        _isHeroDie = true;
+                        this->scheduleOnce(schedule_selector(SBBaseScene::setHeroDie), 3.0f);
                     }
                     curEnemy->hitting();
                 }
@@ -460,7 +460,9 @@ void SBBaseScene::tick(float dt)
     
 }
 
-
+void SBBaseScene::setHeroDie() {
+    _isHeroDie = true;
+}
 
 EnemyController* SBBaseScene::getEnemybyBody(b2Body *aBody)
 {

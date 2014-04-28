@@ -127,19 +127,22 @@ void SBScene::ccTouchesEnded(cocos2d::CCSet *touches, cocos2d::CCEvent *event){
 void SBScene::tick(float dt) {
     SBBaseScene::tick(dt);
     if (this->getEnemyCount() == 0 && _running) {
-        _running = !_running;
-        _gameOverLayer = GameOverLayer::create(ccc4(150, 150, 150, 125), _screenSize.width, _screenSize.height, _screenSize);
-        _gameOverLayer->setPosition(CCPointZero);
-        _gameOverLayer->setTag(2000);
-        this->addChild(_gameOverLayer, 8);
-        this->_gameOverMenu->setVisible(true);
+        showGameOverLayer();
     }
     if (_isHeroDie && _running) {
-        _running = !_running;
-        _gameOverLayer = GameOverLayer::create(ccc4(150, 150, 150, 125), _screenSize.width, _screenSize.height, _screenSize);
-        _gameOverLayer->setPosition(CCPointZero);
-        _gameOverLayer->setTag(2000);
-        this->addChild(_gameOverLayer, 8);
-        this->_gameOverMenu->setVisible(true);
+        showGameOverLayer();
     }
+}
+
+void SBScene::showGameOverLayer() {
+    CCObject* child;
+    CCARRAY_FOREACH(this->getChildren(), child) {
+        ((CCSprite*) child)->pauseSchedulerAndActions();
+    }
+    _running = !_running;
+    _gameOverLayer = GameOverLayer::create(ccc4(150, 150, 150, 125), _screenSize.width, _screenSize.height, _screenSize);
+    _gameOverLayer->setPosition(CCPointZero);
+    _gameOverLayer->setTag(2000);
+    this->addChild(_gameOverLayer, 8);
+    this->_gameOverMenu->setVisible(true);
 }

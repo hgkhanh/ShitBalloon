@@ -63,6 +63,7 @@ public:
     void showMenuScene();
     void showPopBalloon(int charTag,CCPoint aPos);
     void spriteMoveFinished(CCObject *sender);
+    void setHeroDie();
     EnemyController* getEnemybyBody(b2Body* aBody);
     
     virtual void ccTouchesBegan(CCSet* touches, CCEvent* event);

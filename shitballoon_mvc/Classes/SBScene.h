@@ -26,6 +26,7 @@ public:
     virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
     void tick(float dt);
     void reset();
+    void showGameOverLayer();
     CREATE_FUNC(SBScene);
 };
 
