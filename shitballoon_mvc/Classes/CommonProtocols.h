@@ -46,5 +46,7 @@ typedef enum {
 
 typedef enum {
     kHitCooldown = 3,
+    kDebug = 0,
 } GameConfig;
+
 #endif

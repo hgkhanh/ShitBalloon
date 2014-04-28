@@ -31,7 +31,8 @@ bool HeroView::initWithModel(Hero* aHero, CCLayer* aLayer, b2World* aWorld)
     // Create  sprite
         // sprite frame
     CCSprite* heroSprite = CCSprite::createWithSpriteFrameName("hero_idle_01.png");
-        // animation
+    heroSprite->setScale(0.8f);
+    // animation
     initAnimation();
     heroSprite->runAction(_upAction);
     
@@ -166,13 +167,13 @@ void HeroView::initPhysics(b2World* aWorld){
     //Body part
     // Create  shape
     b2CircleShape heroBodyShape;
-    heroBodyShape.m_radius = this->_sprite->getContentSize().width*0.25/PTM_RATIO;
-    heroBodyShape.m_p   = b2Vec2(0,-this->_sprite->getContentSize().height*0.25/PTM_RATIO);
+    heroBodyShape.m_radius = this->_sprite->getContentSize().width*0.14/PTM_RATIO;
+    heroBodyShape.m_p   = b2Vec2(0,-this->_sprite->getContentSize().height*0.15/PTM_RATIO);
     // Create shape definition and add body
     b2FixtureDef heroBodyFixDef;
     heroBodyFixDef.shape = &heroBodyShape;
     heroBodyFixDef.userData = (void *) kHeroBodyTag;
-    heroBodyFixDef.density = 0.4f;
+    heroBodyFixDef.density = 0.8f;
     heroBodyFixDef.friction = 0.2f;
     heroBodyFixDef.restitution = 0.5f;
     
@@ -180,8 +181,8 @@ void HeroView::initPhysics(b2World* aWorld){
     //Balloon part
     // Create  shape
     b2CircleShape heroBalloonShape;
-    heroBalloonShape.m_radius = this->_sprite->getContentSize().width*0.15/PTM_RATIO;
-    heroBalloonShape.m_p   = b2Vec2(0,this->_sprite->getContentSize().height*0.3/PTM_RATIO);
+    heroBalloonShape.m_radius = this->_sprite->getContentSize().width*0.12/PTM_RATIO;
+    heroBalloonShape.m_p   = b2Vec2(0,this->_sprite->getContentSize().height*0.15/PTM_RATIO);
     
     // Create shape definition and add body
     b2FixtureDef heroBalloonFixDef;
@@ -233,7 +234,7 @@ void HeroView::animateDead()
     {
         fixture->SetSensor(true);
     }
-    b2Vec2 force = b2Vec2(0,1000/PTM_RATIO);
+    b2Vec2 force = b2Vec2(0,300/PTM_RATIO);
     _body->ApplyLinearImpulse(force,_body->GetWorldCenter());
     CCLog("animateDead");
 }
