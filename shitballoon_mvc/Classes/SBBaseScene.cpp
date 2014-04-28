@@ -184,6 +184,10 @@ void SBBaseScene::initPhysics()
 	// right
 	groundBox.Set(b2Vec2(_screenSize.width/PTM_RATIO,_screenSize.height/PTM_RATIO), b2Vec2(_screenSize.width/PTM_RATIO,0));
 	_groundBody->CreateFixture(&groundBox, 0);
+    
+    if (kDebug==1) {
+        this->addChild(B2DebugDrawLayer::create(_world, PTM_RATIO), 9999);
+    }
 }
 
 
@@ -342,7 +346,7 @@ void SBBaseScene::tick(float dt)
                     int x = rand() % (2*MAX_FORCE) - MAX_FORCE;
                     int y = rand() % (2*MAX_FORCE) - MAX_FORCE;
                     if(y>0){
-                        b2Vec2 flapForce = b2Vec2(0,350/PTM_RATIO);
+                        b2Vec2 flapForce = b2Vec2(0,380/PTM_RATIO);
                         b->ApplyLinearImpulse(flapForce,b->GetPosition());
                     }
                     b2Vec2 enemyForce = b2Vec2(x/PTM_RATIO,y/PTM_RATIO);

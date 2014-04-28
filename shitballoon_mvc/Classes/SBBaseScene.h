@@ -21,6 +21,7 @@
 #include "PauseLayer.h"
 #include "GameOverLayer.h"
 #include "MenuScene.h"
+#include "B2DebugDrawLayer.h"
 
 #define PTM_RATIO 32.0
 #define AIR_RESIST_SCALE 0.2

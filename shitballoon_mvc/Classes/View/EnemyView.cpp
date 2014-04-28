@@ -31,6 +31,7 @@ bool EnemyView::initWithModel(Enemy* anEnemy, CCLayer* aLayer, b2World* aWorld)
     // Create  sprite
         // sprite frame
     CCSprite* enemySprite = CCSprite::createWithSpriteFrameName("LA_idle.png");
+    enemySprite->setScale(0.8f);
         // animation
     initAnimation();
     enemySprite->runAction(_upAction);
@@ -151,22 +152,22 @@ void EnemyView::initPhysics(b2World* aWorld){
     //Body part
     // Create  shape
     b2CircleShape enemyBodyShape;
-    enemyBodyShape.m_radius = this->_sprite->getContentSize().width*0.25/PTM_RATIO;
-    enemyBodyShape.m_p   = b2Vec2(0,-this->_sprite->getContentSize().height*0.25/PTM_RATIO);
+    enemyBodyShape.m_radius = this->_sprite->getContentSize().width*0.14/PTM_RATIO;
+    enemyBodyShape.m_p   = b2Vec2(0,-this->_sprite->getContentSize().height*0.15/PTM_RATIO);
     // Create shape definition and add body
     b2FixtureDef enemyBodyFixDef;
     enemyBodyFixDef.shape = &enemyBodyShape;
     enemyBodyFixDef.userData = (void *) kEnemyBodyTag;
     enemyBodyFixDef.density = 0.4f;
-    enemyBodyFixDef.friction = 0.2f;
+    enemyBodyFixDef.friction = 0.8f;
     enemyBodyFixDef.restitution = 0.5f;
     
     this->_body->CreateFixture(&enemyBodyFixDef);
     //Balloon part
     // Create  shape
     b2CircleShape enemyBalloonShape;
-    enemyBalloonShape.m_radius = this->_sprite->getContentSize().width*0.15/PTM_RATIO;
-    enemyBalloonShape.m_p   = b2Vec2(0,this->_sprite->getContentSize().height*0.3/PTM_RATIO);
+    enemyBalloonShape.m_radius = this->_sprite->getContentSize().width*0.12/PTM_RATIO;
+    enemyBalloonShape.m_p   = b2Vec2(0,this->_sprite->getContentSize().height*0.15/PTM_RATIO);
     
     // Create shape definition and add body
     b2FixtureDef enemyBalloonFixDef;
@@ -211,7 +212,7 @@ void EnemyView::animateDead()
     {
         fixture->SetSensor(true);
     }
-    b2Vec2 force = b2Vec2(0,1000/PTM_RATIO);
+    b2Vec2 force = b2Vec2(0,300/PTM_RATIO);
     _body->ApplyLinearImpulse(force,_body->GetWorldCenter());
     CCLog("animateDead");
 }

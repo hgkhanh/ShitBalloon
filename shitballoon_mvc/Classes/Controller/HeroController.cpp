@@ -50,7 +50,7 @@ void HeroController::touch(){
     if (_model->getState() != kCharacterStateDying
         && _model->getState() != kCharacterStateDead)
     {
-        b2Vec2 force = b2Vec2(0,400/PTM_RATIO);
+        b2Vec2 force = b2Vec2(0,300/PTM_RATIO);
         b2Body* heroBody = this->_view->getBody();
         heroBody->ApplyLinearImpulse(force,heroBody->GetLocalCenter());
         _view->animateUp();
