@@ -7,7 +7,6 @@
 //
 #include "cocos2d.h"
 #include "Box2D.h"
-#include "extension.h"
 #include "CCScale9Sprite.h"
 #include "CommonProtocols.h"
 #include "EnemyController.h"

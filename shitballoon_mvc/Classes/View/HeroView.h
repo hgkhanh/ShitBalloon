@@ -30,6 +30,7 @@ private:
     CC_SYNTHESIZE(CCAction*, _moveAction, MoveAction);
     CC_SYNTHESIZE(CCAction*, _hitAction, HitAction);
     CC_SYNTHESIZE(CCAction*, _idleAction, IdleAction);
+    CC_SYNTHESIZE(CCAction*, _deadAction, DeadAction);
 public:
     HeroView();
     ~HeroView();

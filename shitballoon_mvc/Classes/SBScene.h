@@ -10,7 +10,6 @@
 #include "cocos2d.h"
 #include "SBBaseScene.h"
 #include "Box2D.h"
-#include "extension.h"
 #define PTM_RATIO 32.0
 #define AIR_RESIST_SCALE 0.2
 #define MAX_FORCE  150

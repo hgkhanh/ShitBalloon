@@ -123,6 +123,15 @@ void HeroView::initAnimation()
     this->setMoveAction(CCRepeatForever::create(heroAnimate));
     _moveAction->retain();
     
+    // dead animation
+    anim = CCAnimation::create();
+    frame1 = spriteFrameCache->spriteFrameByName("hero_die_02.png");
+    anim->addSpriteFrame(frame1);
+    anim->setDelayPerUnit(0.1f);
+    heroAnimate = CCAnimate::create(anim);
+    this->setDeadAction(CCRepeatForever::create(heroAnimate));
+    _deadAction->retain();
+    
     // hit animation
     anim = CCAnimation::create();
     frame1 = spriteFrameCache->spriteFrameByName("hero_hit_02.png");
@@ -223,12 +232,7 @@ void HeroView::animateHit()
 void HeroView::animateDead()
 {
     _sprite->stopAllActions();
-    CCSpriteFrameCache* spriteFrameCache =  CCSpriteFrameCache::sharedSpriteFrameCache();
-
-    CCSpriteFrame *spriteFrame = spriteFrameCache->spriteFrameByName("hero_die_02.png");
-
-    _sprite->setDisplayFrame(spriteFrame);
-    
+    _sprite->runAction(_deadAction);
     // add final blow remove collision, let sprite fall out of screen
     for (b2Fixture* fixture = _body->GetFixtureList(); fixture; fixture = fixture->GetNext())
     {
