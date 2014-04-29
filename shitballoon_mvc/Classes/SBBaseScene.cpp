@@ -442,6 +442,7 @@ void SBBaseScene::tick(float dt)
                     if (result == kCharacterStateDying) {
                         CCPoint popPos = ccp(_heroController->getView()->getSprite()->getPosition().x,_heroController->getView()->getSprite()->getPosition().y + _heroController->getView()->getSprite()->getContentSize().height*0.25);
                         this->showPopBalloon(kHeroTag,popPos);
+                        this->setTouchEnabled(false);
                     }
                     curEnemy->hitting();
                 }

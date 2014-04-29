@@ -135,6 +135,7 @@ void SBScene::tick(float dt) {
 }
 
 void SBScene::showGameOverLayer() {
+    this->setTouchEnabled(true);
     CCObject* child;
     CCARRAY_FOREACH(this->getChildren(), child) {
         ((CCSprite*) child)->pauseSchedulerAndActions();
