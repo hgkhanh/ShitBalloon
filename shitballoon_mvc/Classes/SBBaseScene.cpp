@@ -429,6 +429,7 @@ void SBBaseScene::tick(float dt)
                         this->setEnemyCount(this->getEnemyCount() - 1);
                     }
                     _heroController->hitting();
+                    SimpleAudioEngine::sharedEngine()->playEffect("balloon_pop.wav");
                 }
             }
             // (B : Enemy) Hit (A:Hero)
@@ -445,6 +446,7 @@ void SBBaseScene::tick(float dt)
                         this->setTouchEnabled(false);
                     }
                     curEnemy->hitting();
+                    SimpleAudioEngine::sharedEngine()->playEffect("balloon_pop.wav");
                 }
             }
         }

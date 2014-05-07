@@ -41,6 +41,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     // run
     pDirector->runWithScene(pScene);
+    
+    SimpleAudioEngine::sharedEngine()->preloadEffect("balloon_pop.wav");
 
     return true;
 }
