@@ -5,6 +5,8 @@
 //  Created by Khanh Hoang Nguyen on 3/25/14.
 //  Copyright __MyCompanyName__ 2014. All rights reserved.
 //
+#ifndef __SB_BASE_SCENE_H__
+#define __SB_BASE_SCENE_H__
 #include "cocos2d.h"
 #include "Box2D.h"
 #include "CCScale9Sprite.h"
@@ -47,6 +49,7 @@ private:
     CCSprite* _btnReset;
     CCMenu* _pauseMenu;
     CCMenu* _gameOverMenu;
+    CCMenu* _nextMenu;
 public:
     SBBaseScene();
     ~SBBaseScene();
@@ -71,4 +74,5 @@ public:
     void tick(float dt);
     CREATE_FUNC(SBBaseScene);
 };
+#endif
 

@@ -5,30 +5,30 @@
 //  Created by Khanh Hoang Nguyen on 3/25/14.
 //  Copyright __MyCompanyName__ 2014. All rights reserved.
 //
-#include "SBScene.h"
+#include "SBScene2.h"
 
-SBScene::SBScene()
+SBScene2::SBScene2()
 {
     
 }
 
-SBScene::~SBScene()
+SBScene2::~SBScene2()
 {
     
 }
 
-CCScene* SBScene::scene()
+CCScene* SBScene2::scene()
 {
     // 'scene' is an autorelease object
     CCScene *scene = CCScene::create();
     
     // add layer as a child to scene
-    SBScene* layer = SBScene::create();
+    SBScene2* layer = SBScene2::create();
     scene->addChild(layer);
     return scene;
 }
 
-bool SBScene::init(){
+bool SBScene2::init(){
     if ( !SBBaseScene::init() )
     {
         return false;
@@ -36,7 +36,7 @@ bool SBScene::init(){
     
     // init object
     this->addBackground("shitballoon_bg.png");
-    this->addPlatforms("platform_grass", ccp(_screenSize.width * 0.5, _screenSize.height * 0.5), kLargePlatform);
+    this->addPlatforms("platform_grass", ccp(_screenSize.width * 0.5, _screenSize.height * 0.5), kSmallPlatform);
     this->addHero(ccp(_screenSize.width * 0.5, _screenSize.height * 0.9));
     this->addSpawnPoint(ccp(_screenSize.width * 0.2, _screenSize.height * 0.5), 1.0f, 3);
     this->addSpawnPoint(ccp(_screenSize.width * 0.6, _screenSize.height * 0.7), 1.5f, 4);
@@ -48,7 +48,7 @@ bool SBScene::init(){
     
     menuItemOn = CCSprite::create("btn_play_on.png");
     menuItemOff = CCSprite::create("btn_play_off.png");
-    CCMenuItemSprite * replayItem = CCMenuItemSprite::create(menuItemOn, menuItemOff, this, menu_selector(SBScene::reset));
+    CCMenuItemSprite * replayItem = CCMenuItemSprite::create(menuItemOn, menuItemOff, this, menu_selector(SBScene2::reset));
     
     menuItemOn = CCSprite::create("btn_help_on.png");
     menuItemOff = CCSprite::create("btn_help_off.png");
@@ -62,7 +62,7 @@ bool SBScene::init(){
     
     menuItemOn = CCSprite::create("btn_play_on.png");
     menuItemOff = CCSprite::create("btn_play_off.png");
-    CCMenuItemSprite * nextItem = CCMenuItemSprite::create(menuItemOn, menuItemOff, this, menu_selector(SBScene::next));
+    CCMenuItemSprite * nextItem = CCMenuItemSprite::create(menuItemOn, menuItemOff, this, menu_selector(SBScene2::reset));
     
     menuItemOn = CCSprite::create("btn_help_on.png");
     menuItemOff = CCSprite::create("btn_help_off.png");
@@ -72,7 +72,7 @@ bool SBScene::init(){
     _nextMenu->setPosition(ccp(_screenSize.width * 0.5f, _screenSize.height * 0.5f));
     _nextMenu->setVisible(false);
     this->addChild(_nextMenu, 9);
-
+    
     
     CCObject* curSPController;
     CCARRAY_FOREACH(this->_spawnPointControllerArray, curSPController)
@@ -80,26 +80,26 @@ bool SBScene::init(){
         ((SpawnPointController*) curSPController)->startSpawn();
     }
     
-    this->schedule(schedule_selector(SBScene::tick));
+    this->schedule(schedule_selector(SBScene2::tick));
     
     return true;
 }
 
-void SBScene::reset(){
-//    _running = !_running;
-    CCScene* newScene = CCTransitionFade::create(0.1f, SBScene::scene());
-    SBScene* newLayer= (SBScene*) newScene;
+void SBScene2::reset(){
+    //    _running = !_running;
+    CCScene* newScene = CCTransitionFade::create(0.1f, SBScene2::scene());
+    SBScene2* newLayer= (SBScene2*) newScene;
     newLayer->retain();
     CCDirector::sharedDirector()->replaceScene(newScene);
 }
 
-void SBScene::next(){
-//    _running = !_running;
+void SBScene2::next(){
+    //    _running = !_running;
     CCScene* newScene = CCTransitionFade::create(0.1f, SBScene2::scene());
     CCDirector::sharedDirector()->replaceScene(newScene);
 }
 
-void SBScene::ccTouchesEnded(cocos2d::CCSet *touches, cocos2d::CCEvent *event){
+void SBScene2::ccTouchesEnded(cocos2d::CCSet *touches, cocos2d::CCEvent *event){
     CCTouch *touch = (CCTouch *)touches->anyObject();
     if (touch) {
         CCPoint tap = touch->getLocation();
@@ -131,8 +131,8 @@ void SBScene::ccTouchesEnded(cocos2d::CCSet *touches, cocos2d::CCEvent *event){
                 CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addImage("pause_button_active.png");
                 this->_btnReset->setTexture(tex);
                 _running = !_running;
-                CCScene* newScene = CCTransitionFade::create(0.5f, SBScene::scene());
-                SBScene* newLayer= (SBScene*) newScene;
+                CCScene* newScene = CCTransitionFade::create(0.5f, SBScene2::scene());
+                SBScene2* newLayer= (SBScene2*) newScene;
                 newLayer->retain();
                 CCDirector::sharedDirector()->replaceScene(newScene);
             }
@@ -140,17 +140,17 @@ void SBScene::ccTouchesEnded(cocos2d::CCSet *touches, cocos2d::CCEvent *event){
     }
 }
 
-void SBScene::tick(float dt) {
+void SBScene2::tick(float dt) {
     SBBaseScene::tick(dt);
     if (this->getEnemyCount() == 0 && _running) {
-        showGameOverLayer(true);
+        showGameOverLayer(false);
     }
     if (_isHeroDie && _running) {
-        showGameOverLayer(false);
+        showGameOverLayer(true);
     }
 }
 
-void SBScene::showGameOverLayer(bool next) {
+void SBScene2::showGameOverLayer(bool next) {
     this->setTouchEnabled(true);
     CCObject* child;
     CCARRAY_FOREACH(this->getChildren(), child) {
@@ -163,7 +163,5 @@ void SBScene::showGameOverLayer(bool next) {
     this->addChild(_gameOverLayer, 8);
     if (!next) {
         this->_gameOverMenu->setVisible(true);
-    } else {
-        this->_nextMenu->setVisible(true);
-    }
+    } else this->_nextMenu->setVisible(true);
 }
