@@ -143,10 +143,21 @@ void SBScene2::ccTouchesEnded(cocos2d::CCSet *touches, cocos2d::CCEvent *event){
 void SBScene2::tick(float dt) {
     SBBaseScene::tick(dt);
     if (this->getEnemyCount() == 0 && _running) {
-        showGameOverLayer(false);
+        CCUserDefault::sharedUserDefault()->setIntegerForKey("current point", this->getPlayerPoints());
+        CCUserDefault::sharedUserDefault()->flush();
+        showGameOverLayer(true);
     }
     if (_isHeroDie && _running) {
-        showGameOverLayer(true);
+        CCLog("Pts: %i", this->getPlayerPoints());
+        CCLog("HighScore: %i", CCUserDefault::sharedUserDefault()->getIntegerForKey("highscore"));
+        if (this->getPlayerPoints() > CCUserDefault::sharedUserDefault()->getIntegerForKey("highscore")) {
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("highscore", this->getPlayerPoints());
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("current point", 0);
+            CCUserDefault::sharedUserDefault()->flush();
+            CCLog("Pts: %i", this->getPlayerPoints());
+            CCLog("HighScore: %i", CCUserDefault::sharedUserDefault()->getIntegerForKey("highscore"));
+        }
+        showGameOverLayer(false);
     }
 }
 

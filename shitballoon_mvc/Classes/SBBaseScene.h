@@ -50,6 +50,7 @@ private:
     CCMenu* _pauseMenu;
     CCMenu* _gameOverMenu;
     CCMenu* _nextMenu;
+    CC_SYNTHESIZE(int, _playerPoints, PlayerPoints);
 public:
     SBBaseScene();
     ~SBBaseScene();

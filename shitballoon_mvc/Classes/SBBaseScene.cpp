@@ -27,6 +27,8 @@ bool SBBaseScene::init(){
     _screenSize = CCDirector::sharedDirector()->getWinSize();
     this->setEnemyCount(0);
     
+    this->setPlayerPoints(CCUserDefault::sharedUserDefault()->getIntegerForKey("current point") ? CCUserDefault::sharedUserDefault()->getIntegerForKey("current point") : 0);
+    
     //Sprite Sheet
     this->initSprite();
     
@@ -117,6 +119,7 @@ void SBBaseScene::addPlatforms(char *fileName, CCPoint pos, int type){
 void SBBaseScene::resume() {
     if (_running) return;
     _running = !_running;
+    CCDirector::sharedDirector()->resume();
     this->removeChildByTag(1000);
     this->_pauseMenu->setVisible(false);
     this->_btnReset->setVisible(true);
@@ -427,6 +430,7 @@ void SBBaseScene::tick(float dt)
                         CCPoint popPos = ccp(curEnemy->getView()->getSprite()->getPosition().x,curEnemy->getView()->getSprite()->getPosition().y + curEnemy->getView()->getSprite()->getContentSize().height*0.25);
                         this->showPopBalloon(kEnemyTag,popPos);
                         this->setEnemyCount(this->getEnemyCount() - 1);
+                        this->_playerPoints = this->_playerPoints + 1;
                     }
                     _heroController->hitting();
                     SimpleAudioEngine::sharedEngine()->playEffect("balloon_pop.wav");

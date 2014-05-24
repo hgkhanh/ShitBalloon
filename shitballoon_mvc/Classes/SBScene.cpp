@@ -115,10 +115,11 @@ void SBScene::ccTouchesEnded(cocos2d::CCSet *touches, cocos2d::CCEvent *event){
                 _pauseLayer->setPosition(CCPointZero);
                 _pauseLayer->setTag(1000);
                 this->addChild(_pauseLayer, 8);
-                CCObject* child;
-                CCARRAY_FOREACH(this->getChildren(), child) {
-                    ((CCSprite*) child)->pauseSchedulerAndActions();
-                }
+//                CCObject* child;
+//                CCARRAY_FOREACH(this->getChildren(), child) {
+//                    ((CCSprite*) child)->pauseSchedulerAndActions();
+//                }
+                CCDirector::sharedDirector()->pause();
                 CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addImage("pause_button.png");
                 this->_btnPause->setTexture(tex);
                 this->_pauseMenu->setVisible(true);
@@ -143,9 +144,20 @@ void SBScene::ccTouchesEnded(cocos2d::CCSet *touches, cocos2d::CCEvent *event){
 void SBScene::tick(float dt) {
     SBBaseScene::tick(dt);
     if (this->getEnemyCount() == 0 && _running) {
+        CCUserDefault::sharedUserDefault()->setIntegerForKey("current point", this->getPlayerPoints());
+        CCUserDefault::sharedUserDefault()->flush();
         showGameOverLayer(true);
     }
     if (_isHeroDie && _running) {
+        CCLog("Pts: %i", this->getPlayerPoints());
+        CCLog("HighScore: %i", CCUserDefault::sharedUserDefault()->getIntegerForKey("highscore"));
+        if (this->getPlayerPoints() > CCUserDefault::sharedUserDefault()->getIntegerForKey("highscore")) {
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("highscore", this->getPlayerPoints());
+            CCUserDefault::sharedUserDefault()->setIntegerForKey("current point", 0);
+            CCUserDefault::sharedUserDefault()->flush();
+            CCLog("Pts: %i", this->getPlayerPoints());
+            CCLog("HighScore: %i", CCUserDefault::sharedUserDefault()->getIntegerForKey("highscore"));
+        }
         showGameOverLayer(false);
     }
 }
