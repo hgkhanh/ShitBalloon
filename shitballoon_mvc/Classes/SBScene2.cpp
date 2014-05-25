@@ -148,14 +148,10 @@ void SBScene2::tick(float dt) {
         showGameOverLayer(true);
     }
     if (_isHeroDie && _running) {
-        CCLog("Pts: %i", this->getPlayerPoints());
-        CCLog("HighScore: %i", CCUserDefault::sharedUserDefault()->getIntegerForKey("highscore"));
         if (this->getPlayerPoints() > CCUserDefault::sharedUserDefault()->getIntegerForKey("highscore")) {
             CCUserDefault::sharedUserDefault()->setIntegerForKey("highscore", this->getPlayerPoints());
             CCUserDefault::sharedUserDefault()->setIntegerForKey("current point", 0);
             CCUserDefault::sharedUserDefault()->flush();
-            CCLog("Pts: %i", this->getPlayerPoints());
-            CCLog("HighScore: %i", CCUserDefault::sharedUserDefault()->getIntegerForKey("highscore"));
         }
         showGameOverLayer(false);
     }

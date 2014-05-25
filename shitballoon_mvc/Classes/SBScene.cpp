@@ -115,10 +115,10 @@ void SBScene::ccTouchesEnded(cocos2d::CCSet *touches, cocos2d::CCEvent *event){
                 _pauseLayer->setPosition(CCPointZero);
                 _pauseLayer->setTag(1000);
                 this->addChild(_pauseLayer, 8);
-//                CCObject* child;
-//                CCARRAY_FOREACH(this->getChildren(), child) {
-//                    ((CCSprite*) child)->pauseSchedulerAndActions();
-//                }
+                CCObject* child;
+                CCARRAY_FOREACH(this->getChildren(), child) {
+                    ((CCSprite*) child)->pauseSchedulerAndActions();
+                }
                 CCDirector::sharedDirector()->pause();
                 CCTexture2D* tex = CCTextureCache::sharedTextureCache()->addImage("pause_button.png");
                 this->_btnPause->setTexture(tex);

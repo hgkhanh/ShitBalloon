@@ -129,6 +129,7 @@ void SBBaseScene::resume() {
 void SBBaseScene::showMenuScene() {
     if (_running) return;
     _running = !_running;
+    CCDirector::sharedDirector()->resume();
     CCScene* newScene = CCTransitionFade::create(0.5f, MenuScene::scene());
     MenuScene* newLayer= (MenuScene*) newScene;
     newLayer->retain();
@@ -146,6 +147,11 @@ void SBBaseScene::initSprite()
     CCSpriteBatchNode* spriteBatchNode = CCSpriteBatchNode::create("AnimShit.png");
         // add _spriteBatchNode to scene
     this->addChild(spriteBatchNode);
+    
+    //init scoreboard
+    this->scoreBoard = CCLabelTTF::create(to_string(this->getPlayerPoints()).c_str(),"VisitorTT1BRK", 50);
+    this->scoreBoard->setPosition(ccp(_screenSize.width * 0.5, _screenSize.height * 0.9));
+    this->addChild(this->scoreBoard, 10);
 }
 
 void SBBaseScene::initPhysics()
@@ -281,6 +287,8 @@ void SBBaseScene::didSwipe(CCObject * obj)
 void SBBaseScene::tick(float dt)
 {
     if (!_running) return;
+    //update scoreboard
+    this->scoreBoard->setString(to_string(this->getPlayerPoints()).c_str());
     int velocityIterations = 8;
 	int positionIterations = 1;
 	_world->Step(dt, velocityIterations, positionIterations);

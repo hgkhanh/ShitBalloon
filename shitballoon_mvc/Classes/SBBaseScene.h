@@ -51,6 +51,7 @@ private:
     CCMenu* _gameOverMenu;
     CCMenu* _nextMenu;
     CC_SYNTHESIZE(int, _playerPoints, PlayerPoints);
+    CCLabelTTF* scoreBoard;
 public:
     SBBaseScene();
     ~SBBaseScene();
