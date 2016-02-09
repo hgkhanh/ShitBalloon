@@ -4,7 +4,7 @@ cocos2d-x mobile game
 
 ## Description
 
-Using your hot air baloon to fight and survive! A platform game for Android and IOS
+Using your hot air baloon to fight and survive! An action platform game for Android and IOS
 
 ## Contributors
 
