@@ -8,5 +8,5 @@ Using your hot air baloon to fight and survive! An action platform game for Andr
 
 ## Contributors
 
-Nguyen Hoang Khanh (hkhanh.ng@gmail.com)
-Tran Duc Minh (ducminh1712@gmail.com)
+* Nguyen Hoang Khanh (hkhanh.ng@gmail.com)
+* Tran Duc Minh (ducminh1712@gmail.com)
